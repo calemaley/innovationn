@@ -37,7 +37,7 @@ export default function BuyUsCoffeePage() {
     <main className="flex-1 flex flex-col items-center px-6 md:px-12 pb-16 pt-0 animate-fade-in">
       {/* Main Image Container */}
       <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden mb-0 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
-        <div className="relative h-[400px] w-full">
+        <div className="relative w-full aspect-[16/9] md:aspect-[4/3]">
           <Image
             src={coffeeImage?.imageUrl || "https://i.ibb.co/JW3pfWWG/mage-4.jpg"}
             alt="Support InnovationZ"
@@ -50,13 +50,13 @@ export default function BuyUsCoffeePage() {
       </div>
 
       {/* Caption */}
-      <p className="w-full max-w-[920px] px-[2px] py-3.5 text-[0.92rem] font-light italic text-[#111110] opacity-0 animate-fade-up [animation-delay:0.3s] [animation-fill-mode:forwards]">
+      <p className="w-full max-w-[920px] px-2 md:px-[2px] py-3 md:py-3.5 text-[0.8rem] md:text-[0.92rem] font-light italic text-[#111110] opacity-0 animate-fade-up [animation-delay:0.3s] [animation-fill-mode:forwards]">
         Our media partners publish our case studies synthesized from our webinars to 2.2M daily readers
       </p>
 
       {/* Peek Strip */}
-      <div className="w-full max-w-[920px] h-[64px] overflow-hidden rounded-[2px] mb-3 opacity-0 animate-fade-in [animation-delay:0.35s] [animation-fill-mode:forwards]">
-        <div className="relative h-[400px] w-full -mt-[336px]">
+      <div className="w-full max-w-[920px] h-12 md:h-16 overflow-hidden rounded-[2px] mb-4 md:mb-3 opacity-0 animate-fade-in [animation-delay:0.35s] [animation-fill-mode:forwards]">
+        <div className="relative h-full w-full">
           <Image
             src={coffeeImage?.imageUrl || "https://i.ibb.co/JW3pfWWG/mage-4.jpg"}
             alt=""
@@ -68,14 +68,14 @@ export default function BuyUsCoffeePage() {
       </div>
 
       {/* Controls Row */}
-      <div className="w-full max-w-[920px] flex flex-col lg:flex-row items-stretch gap-2 opacity-0 animate-fade-up [animation-delay:0.45s] [animation-fill-mode:forwards]">
-        
+      <div className="w-full max-w-[920px] flex flex-col lg:flex-row items-stretch gap-3 md:gap-2 opacity-0 animate-fade-up [animation-delay:0.45s] [animation-fill-mode:forwards]">
+
         {/* Payment Method Select */}
         <div className="relative flex-1 lg:flex-none">
-          <select 
+          <select
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
-            className="w-full lg:min-w-[180px] appearance-none bg-[#eeede9] border-none py-[18px] pl-6 pr-12 text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body"
+            className="w-full lg:min-w-[180px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-12 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
           >
             <option>Pay with card</option>
             <option>Pay with M-Pesa</option>
@@ -85,10 +85,10 @@ export default function BuyUsCoffeePage() {
 
         {/* Amount Select */}
         <div className="relative flex-1 lg:flex-none">
-          <select 
+          <select
             value={usdAmount}
             onChange={(e) => setUsdAmount(e.target.value)}
-            className="w-full lg:min-w-[150px] appearance-none bg-[#eeede9] border-none py-[18px] pl-6 pr-12 text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body"
+            className="w-full lg:min-w-[150px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-12 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
           >
             <option value="10">USD 10</option>
             <option value="25">USD 25</option>
@@ -100,17 +100,18 @@ export default function BuyUsCoffeePage() {
         </div>
 
         {/* Amount Display */}
-        <div className="flex-1 bg-white border border-[#eeede9] flex items-center px-6 py-[18px] text-[0.95rem] italic text-[#111110] rounded-[2px] whitespace-nowrap">
-          Approximately KES {kesAmount}
+        <div className="flex-1 bg-white border border-[#eeede9] flex items-center justify-center md:justify-start px-4 md:px-6 py-3 md:py-[18px] text-[0.8rem] md:text-[0.95rem] italic text-[#111110] rounded-[2px]">
+          <span>Approximately</span>
+          <span className="ml-1 font-medium">KES {kesAmount}</span>
         </div>
 
         {/* CTA Button */}
-        <button 
+        <button
           onClick={handleBuyCoffee}
-          className="bg-[#2255e0] hover:bg-[#1a44c8] text-white py-[18px] px-8 text-[0.95rem] font-medium flex items-center justify-center lg:justify-start gap-3 rounded-[2px] transition-colors whitespace-nowrap"
+          className="bg-[#2255e0] hover:bg-[#1a44c8] text-white py-3 md:py-[18px] px-6 md:px-8 text-[0.85rem] md:text-[0.95rem] font-medium flex items-center justify-center gap-2 md:gap-3 rounded-[2px] transition-colors"
         >
           Buy us coffee
-          <span className="flex items-center justify-center w-[26px] h-[26px] rounded-full border-[1.5px] border-white/60 text-[0.85rem]">
+          <span className="flex items-center justify-center w-[24px] md:w-[26px] h-[24px] md:h-[26px] rounded-full border-[1.5px] border-white/60 text-[0.75rem] md:text-[0.85rem]">
             <ArrowRight className="w-3 h-3" />
           </span>
         </button>

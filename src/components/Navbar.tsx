@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from 'next/link';
@@ -17,18 +16,18 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex justify-between items-center px-6 md:px-[60px] py-7 bg-background">
-      <Link href="/" className="font-headline text-2xl tracking-tight text-foreground">
+    <nav className="flex justify-between items-center px-6 md:px-[60px] py-6 md:py-8 bg-background border-b border-border">
+      <Link href="/" className="font-headline text-xl md:text-2xl tracking-tight text-foreground">
         InnovationZ
       </Link>
-      <ul className="flex gap-8 list-none">
+      <ul className="hidden md:flex gap-6 lg:gap-8 list-none">
         {navLinks.map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}
               className={cn(
-                "text-[0.9rem] font-normal transition-colors hover:text-primary relative whitespace-nowrap",
-                pathname === link.href ? "text-foreground after:content-[''] after:block after:w-1.5 after:h-1.5 after:bg-primary after:rounded-full after:absolute after:-right-2.5 after:top-1/2 after:-translate-y-1/2" : "text-muted-foreground"
+                "text-[0.85rem] lg:text-[0.9rem] font-normal transition-colors hover:text-primary relative",
+                pathname === link.href ? "text-foreground after:content-[''] after:block after:w-1.5 after:h-1.5 after:bg-primary after:rounded-full after:absolute after:-right-3 after:top-1/2 after:-translate-y-1/2" : "text-muted-foreground"
               )}
             >
               {link.label}
