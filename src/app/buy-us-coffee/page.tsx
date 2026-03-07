@@ -79,8 +79,6 @@ export default function BuyUsCoffeePage() {
           >
             <option>Pay with card</option>
             <option>Pay with M-Pesa</option>
-            <option>Pay with PayPal</option>
-            <option>Pay with crypto</option>
           </select>
           <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
         </div>
