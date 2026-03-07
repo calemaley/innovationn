@@ -64,10 +64,10 @@ export default function SpeakerOpportunity() {
     console.log("Form Submitted:", data);
     toast({
       title: "Success",
-      description: "We've received your information. Talk soon!",
+      description: "We've received your information. Let's schedule a time.",
     });
-    // Redirect after a short delay
-    setTimeout(() => router.push("/"), 2000);
+    // Redirect to schedule meeting page
+    setTimeout(() => router.push("/schedule-meeting"), 1500);
   };
 
   return (

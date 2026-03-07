@@ -35,6 +35,12 @@
       "description": "Two hands reaching towards each other for Speaker Opportunity",
       "imageUrl": "https://i.ibb.co/q3kMym7J/mage-2.jpg",
       "imageHint": "connecting hands"
+    },
+    {
+      "id": "meeting-hero",
+      "description": "Speaker addressing a large audience",
+      "imageUrl": "https://picsum.photos/seed/meeting/920/510",
+      "imageHint": "speaker audience"
     }
   ]
 }
