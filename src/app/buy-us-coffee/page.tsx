@@ -34,7 +34,7 @@ export default function BuyUsCoffeePage() {
   };
 
   return (
-    <main className="flex-1 flex flex-col items-center px-6 md:px-12 pb-16 pt-0 animate-fade-in">
+    <main className="flex-1 flex flex-col items-center px-6 md:px-12 pb-8 md:pb-16 pt-0 animate-fade-in">
       {/* Main Image Container */}
       <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden mb-0 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
         <div className="relative w-full aspect-[16/9] md:aspect-[4/3]">
@@ -50,7 +50,7 @@ export default function BuyUsCoffeePage() {
       </div>
 
       {/* Caption */}
-      <p className="w-full max-w-[920px] px-2 md:px-[2px] py-3 md:py-3.5 text-[0.8rem] md:text-[0.92rem] font-light italic text-[#111110] opacity-0 animate-fade-up [animation-delay:0.3s] [animation-fill-mode:forwards]">
+      <p className="w-full max-w-[920px] px-2 md:px-[2px] py-3 md:py-3.5 text-[0.9rem] md:text-[1rem] font-light italic text-[#111110] opacity-0 animate-fade-up [animation-delay:0.3s] [animation-fill-mode:forwards]">
         Our media partners publish our case studies synthesized from our webinars to 2.2M daily readers
       </p>
 
@@ -67,55 +67,68 @@ export default function BuyUsCoffeePage() {
         </div>
       </div>
 
-      {/* Controls Row */}
-      <div className="w-full max-w-[920px] flex flex-col lg:flex-row items-stretch gap-3 md:gap-2 opacity-0 animate-fade-up [animation-delay:0.45s] [animation-fill-mode:forwards]">
+      {/* Controls Container */}
+      <div className="w-full max-w-[920px] opacity-0 animate-fade-up [animation-delay:0.45s] [animation-fill-mode:forwards]">
+        {/* Controls Row */}
+        <div className="w-full flex flex-col md:flex-row items-stretch gap-4 md:gap-3 mb-4 md:mb-0">
 
-        {/* Payment Method Select */}
-        <div className="relative flex-1 lg:flex-none">
-          <select
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-            className="w-full lg:min-w-[180px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-12 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
+          {/* Payment Method Select */}
+          <div className="relative flex-1">
+            <select
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              className="w-full appearance-none bg-[#eeede9] border-none py-4 md:py-[18px] pl-6 pr-12 text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
+            >
+              <option>Pay with card</option>
+              <option>Pay with M-Pesa</option>
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
+          </div>
+
+          {/* Amount Select */}
+          <div className="relative flex-1">
+            <select
+              value={usdAmount}
+              onChange={(e) => setUsdAmount(e.target.value)}
+              className="w-full appearance-none bg-[#eeede9] border-none py-4 md:py-[18px] pl-6 pr-12 text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
+            >
+              <option value="10">USD 10</option>
+              <option value="25">USD 25</option>
+              <option value="50">USD 50</option>
+              <option value="100">USD 100</option>
+              <option value="250">USD 250</option>
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
+          </div>
+
+          {/* Amount Display */}
+          <div className="flex-1 bg-white border border-[#eeede9] flex items-center justify-center md:justify-start px-4 md:px-6 py-4 md:py-[18px] text-[0.95rem] md:text-[1.05rem] italic text-[#111110] rounded-[2px]">
+            <span>Approximately</span>
+            <span className="ml-1 font-medium">KES {kesAmount}</span>
+          </div>
+
+          {/* CTA Button - Desktop */}
+          <button
+            onClick={handleBuyCoffee}
+            className="hidden md:flex bg-[#2255e0] hover:bg-[#1a44c8] text-white py-4 md:py-[18px] px-6 md:px-8 text-[0.95rem] md:text-[1.05rem] font-medium items-center justify-center gap-2 md:gap-3 rounded-[2px] transition-colors"
           >
-            <option>Pay with card</option>
-            <option>Pay with M-Pesa</option>
-          </select>
-          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
+            Buy us coffee
+            <span className="flex items-center justify-center w-[24px] md:w-[26px] h-[24px] md:h-[26px] rounded-full border-[1.5px] border-white/60 text-[0.75rem] md:text-[0.85rem]">
+              <ArrowRight className="w-3 h-3" />
+            </span>
+          </button>
         </div>
 
-        {/* Amount Select */}
-        <div className="relative flex-1 lg:flex-none">
-          <select
-            value={usdAmount}
-            onChange={(e) => setUsdAmount(e.target.value)}
-            className="w-full lg:min-w-[150px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-12 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
-          >
-            <option value="10">USD 10</option>
-            <option value="25">USD 25</option>
-            <option value="50">USD 50</option>
-            <option value="100">USD 100</option>
-            <option value="250">USD 250</option>
-          </select>
-          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
-        </div>
-
-        {/* Amount Display */}
-        <div className="flex-1 bg-white border border-[#eeede9] flex items-center justify-center md:justify-start px-4 md:px-6 py-3 md:py-[18px] text-[0.8rem] md:text-[0.95rem] italic text-[#111110] rounded-[2px]">
-          <span>Approximately</span>
-          <span className="ml-1 font-medium">KES {kesAmount}</span>
-        </div>
-
-        {/* CTA Button */}
+        {/* CTA Button - Mobile */}
         <button
           onClick={handleBuyCoffee}
-          className="bg-[#2255e0] hover:bg-[#1a44c8] text-white py-3 md:py-[18px] px-6 md:px-8 text-[0.85rem] md:text-[0.95rem] font-medium flex items-center justify-center gap-2 md:gap-3 rounded-[2px] transition-colors"
+          className="md:hidden w-full bg-[#2255e0] hover:bg-[#1a44c8] text-white py-4 px-6 text-[0.95rem] font-medium flex items-center justify-center gap-2 rounded-[2px] transition-colors mt-4"
         >
           Buy us coffee
-          <span className="flex items-center justify-center w-[24px] md:w-[26px] h-[24px] md:h-[26px] rounded-full border-[1.5px] border-white/60 text-[0.75rem] md:text-[0.85rem]">
+          <span className="flex items-center justify-center w-[24px] h-[24px] rounded-full border-[1.5px] border-white/60 text-[0.75rem]">
             <ArrowRight className="w-3 h-3" />
           </span>
         </button>
-
       </div>
     </main>
   );

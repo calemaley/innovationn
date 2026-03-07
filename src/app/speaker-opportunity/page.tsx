@@ -90,20 +90,20 @@ export default function SpeakerOpportunity() {
       {/* Form Container */}
       <div className="w-full max-w-[920px] flex-1 flex flex-col">
         {/* Current Field Label */}
-        <div className="mb-4 md:mb-5">
-          <label className="block text-sm md:text-base text-muted-foreground font-medium mb-2">
+        <div className="mb-3 md:mb-5">
+          <label className="block text-sm md:text-lg text-muted-foreground font-medium mb-3 md:mb-2">
             {steps[activeStep].label}
           </label>
         </div>
 
         {/* Input Field */}
-        <div className="mb-8 md:mb-10">
-          <div className="w-full bg-muted flex items-center px-5 md:px-7 py-5 md:py-6 rounded-lg">
+        <div className="mb-10 md:mb-12">
+          <div className="w-full bg-muted flex items-center px-5 md:px-7 py-6 md:py-7 rounded-lg">
             <input
               {...form.register(currentField)}
               type={currentField === "email" ? "email" : "text"}
               placeholder={steps[activeStep].placeholder}
-              className="flex-1 bg-transparent border-none outline-none text-lg md:text-xl font-body placeholder:text-muted-foreground focus:ring-0"
+              className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body placeholder:text-muted-foreground focus:ring-0"
               autoComplete="off"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -128,14 +128,14 @@ export default function SpeakerOpportunity() {
         </div>
 
         {/* Steps Indicator */}
-        <div className="mb-8 md:mb-10">
+        <div className="mb-12 md:mb-16">
           <div className="flex flex-wrap gap-2 md:gap-3">
             {steps.map((step, index) => (
               <button
                 key={step.id}
                 onClick={() => index < activeStep && setActiveStep(index)}
                 className={cn(
-                  "text-[0.8rem] md:text-[0.9rem] px-3 md:px-4 py-2 md:py-2.5 rounded-full transition-colors",
+                  "text-[0.85rem] md:text-[0.95rem] px-4 md:px-5 py-2.5 md:py-3 rounded-full transition-colors",
                   index === activeStep
                     ? "bg-primary/15 text-primary font-medium"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted",
@@ -152,10 +152,10 @@ export default function SpeakerOpportunity() {
         <div className="flex-1" />
 
         {/* Submit Button */}
-        <div className="pt-8 md:pt-10 border-t border-border animate-fade-up [animation-delay:0.5s]">
+        <div className="pt-10 md:pt-12 border-t border-border animate-fade-up [animation-delay:0.5s]">
           <button
             onClick={handleManualSubmit}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 md:py-5 px-6 md:px-8 text-base md:text-lg font-medium rounded-lg transition-all duration-200 active:scale-95"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-5 md:py-6 px-6 md:px-8 text-lg md:text-xl font-medium rounded-lg transition-all duration-200 active:scale-95"
           >
             Submit Application
           </button>

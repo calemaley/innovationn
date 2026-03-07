@@ -67,7 +67,7 @@ export default function PayWithCardPage() {
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center px-6 py-8 md:py-12 md:px-[60px]">
-      <h1 className="font-headline text-xl md:text-2xl lg:text-[1.9rem] mb-4 md:mb-6 animate-fade-up text-[#111110]">
+      <h1 className="font-headline text-2xl md:text-3xl lg:text-[2.1rem] mb-6 md:mb-8 animate-fade-up text-[#111110]">
         Pay with Card
       </h1>
 
@@ -83,7 +83,7 @@ export default function PayWithCardPage() {
         </div>
       </div>
 
-      <div className="w-full max-w-[920px] bg-[#eeede9] flex items-center px-4 md:px-7 py-4 md:py-[22px] mt-[2px] mb-[2px] animate-fade-up [animation-delay:0.35s]">
+      <div className="w-full max-w-[920px] bg-[#eeede9] flex items-center px-5 md:px-7 py-5 md:py-6 mt-[2px] mb-[2px] animate-fade-up [animation-delay:0.35s] rounded-[2px]">
         <input
           {...form.register(currentField, {
             onChange: (e) => {
@@ -94,7 +94,7 @@ export default function PayWithCardPage() {
           })}
           type="text"
           placeholder={steps[activeStep].placeholder}
-          className="flex-1 bg-transparent border-none outline-none text-base md:text-lg font-light text-[#111110] placeholder:text-[#aaa9a6] focus:ring-0 tracking-[0.05em]"
+          className="flex-1 bg-transparent border-none outline-none text-lg md:text-xl font-light text-[#111110] placeholder:text-[#aaa9a6] focus:ring-0 tracking-[0.05em]"
           autoComplete="off"
           maxLength={currentField === "cardNumber" ? 19 : currentField === "cvv" ? 4 : 5}
           onKeyDown={(e) => {
@@ -107,21 +107,21 @@ export default function PayWithCardPage() {
         <button
           type="button"
           onClick={handleNext}
-          className="text-[#aaa9a6] text-lg md:text-[1.1rem] hover:text-[#111110] transition-colors p-1 flex-shrink-0"
+          className="text-[#aaa9a6] text-xl md:text-2xl hover:text-[#111110] transition-colors p-1 flex-shrink-0"
           aria-label="Next"
         >
           &#x21B5;
         </button>
       </div>
 
-      <div className="w-full max-w-[920px] flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-0 px-1 py-4 md:py-5 animate-fade-up [animation-delay:0.45s]">
-        <div className="flex flex-wrap gap-3 md:gap-0">
+      <div className="w-full max-w-[920px] flex flex-col items-center gap-6 md:gap-8 px-1 py-6 md:py-8 animate-fade-up [animation-delay:0.45s]">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8">
           {steps.map((step, index) => (
             <button
               key={step.id}
               onClick={() => index < activeStep && setActiveStep(index)}
               className={cn(
-                "text-[0.75rem] md:text-[0.88rem] md:mr-8 lg:mr-11 transition-colors",
+                "text-[0.85rem] md:text-[0.95rem] transition-colors",
                 index === activeStep ? "text-[#2255e0] font-medium" : "text-[#aaa9a6] hover:text-[#111110]",
                 index > activeStep && "cursor-default opacity-50"
               )}
@@ -132,7 +132,7 @@ export default function PayWithCardPage() {
         </div>
         <button
           onClick={handleNext}
-          className="italic text-[0.75rem] md:text-[0.88rem] text-[#aaa9a6] hover:text-[#111110] transition-colors md:ml-auto"
+          className="italic text-[0.85rem] md:text-[0.95rem] text-[#aaa9a6] hover:text-[#111110] transition-colors"
         >
           Pay
         </button>

@@ -46,7 +46,7 @@ export default function PayWithMpesaPage() {
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center px-6 py-8 md:py-12 md:px-[60px]">
-      <h1 className="font-headline text-xl md:text-2xl lg:text-[1.9rem] mb-4 md:mb-6 animate-fade-up text-[#111110]">
+      <h1 className="font-headline text-2xl md:text-3xl lg:text-[2.1rem] mb-6 md:mb-8 animate-fade-up text-[#111110]">
         Pay with M-Pesa
       </h1>
 
@@ -63,34 +63,34 @@ export default function PayWithMpesaPage() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-[920px]">
-        <div className="w-full bg-[#eeede9] flex items-center px-4 md:px-7 py-4 md:py-[22px] mt-[2px] mb-[2px] animate-fade-up [animation-delay:0.35s]">
+        <div className="w-full bg-[#eeede9] flex items-center px-5 md:px-7 py-5 md:py-6 mt-[2px] mb-[2px] animate-fade-up [animation-delay:0.35s] rounded-[2px]">
           <input
             {...register("phoneNumber", { onChange: formatMpesa })}
             type="tel"
             placeholder="Enter M-pesa number"
-            className="flex-1 bg-transparent border-none outline-none text-base md:text-lg font-light text-[#111110] placeholder:text-[#aaa9a6] focus:ring-0"
+            className="flex-1 bg-transparent border-none outline-none text-lg md:text-xl font-light text-[#111110] placeholder:text-[#aaa9a6] focus:ring-0"
             autoComplete="off"
             maxLength={13}
           />
-          <button type="submit" className="text-[#aaa9a6] text-lg md:text-[1.1rem] hover:text-[#111110] transition-colors p-1 flex-shrink-0 bg-transparent border-none cursor-pointer" aria-label="Submit">
+          <button type="submit" className="text-[#aaa9a6] text-xl md:text-2xl hover:text-[#111110] transition-colors p-1 flex-shrink-0 bg-transparent border-none cursor-pointer" aria-label="Submit">
             &#x21B5;
           </button>
         </div>
       </form>
 
-      <div className="w-full max-w-[920px] flex flex-col md:flex-row md:items-center gap-4 md:gap-0 px-1 py-4 md:py-5 animate-fade-up [animation-delay:0.45s]">
-        <button className="text-[0.75rem] md:text-[0.88rem] md:mr-8 lg:mr-11 text-[#2255e0] font-medium">
+      <div className="w-full max-w-[920px] flex flex-col items-center gap-6 md:gap-8 px-1 py-6 md:py-8 animate-fade-up [animation-delay:0.45s]">
+        <button className="text-[0.85rem] md:text-[0.95rem] text-[#2255e0] font-medium">
           M-pesa number
         </button>
         <button
           onClick={handleSubmit(onSubmit)}
-          className="italic text-[0.75rem] md:text-[0.88rem] text-[#aaa9a6] hover:text-[#111110] transition-colors md:ml-auto"
+          className="italic text-[0.85rem] md:text-[0.95rem] text-[#aaa9a6] hover:text-[#111110] transition-colors"
         >
           Pay
         </button>
       </div>
       {errors.phoneNumber && (
-        <p className="text-red-500 text-xs mt-2 max-w-[920px] mx-auto w-full px-1">{errors.phoneNumber.message}</p>
+        <p className="text-red-500 text-sm mt-4 max-w-[920px] mx-auto w-full px-1">{errors.phoneNumber.message}</p>
       )}
     </div>
   );
