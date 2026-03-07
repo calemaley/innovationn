@@ -5,8 +5,8 @@ import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'InnovateHub | Connecting Innovators',
-  description: 'At InnovateHub we believe in all things innovation and the communities powering them.',
+  title: 'InnovationZ | Connecting Innovators',
+  description: 'At InnovationZ we believe in all things innovation and the communities powering them.',
 };
 
 export default function RootLayout({

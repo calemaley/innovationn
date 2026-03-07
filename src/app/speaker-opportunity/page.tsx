@@ -48,7 +48,7 @@ export default function SpeakerOpportunity() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
       <div className="space-y-4 mb-8">
-        <h1 className="font-headline text-4xl text-foreground">Speak at InnovateHub</h1>
+        <h1 className="font-headline text-4xl text-foreground">Speak at InnovationZ</h1>
         <p className="text-muted-foreground leading-relaxed">
           We're always looking for fresh voices and groundbreaking ideas. Fill out the form below to let us know you're interested in presenting at one of our upcoming events.
         </p>

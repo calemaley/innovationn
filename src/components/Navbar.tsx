@@ -18,7 +18,7 @@ export default function Navbar() {
   return (
     <nav className="flex justify-between items-center px-6 md:px-[60px] py-7 bg-background">
       <Link href="/" className="font-headline text-2xl tracking-tight text-foreground">
-        InnovateHub
+        InnovationZ
       </Link>
       <ul className="hidden md:flex gap-11 list-none">
         {navLinks.map((link) => (

@@ -11,7 +11,7 @@ export default function Home() {
       <section className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 lg:gap-0 px-6 md:px-[60px] pt-12 items-start">
         <div className="flex flex-col gap-14 pt-2">
           <p className="text-[1.05rem] leading-relaxed font-light max-w-[220px] opacity-0 animate-fade-up [animation-delay:0.1s] [animation-fill-mode:forwards]">
-            At InnovateHub we believe in all things innovation and the communities powering them.
+            At InnovationZ we believe in all things innovation and the communities powering them.
           </p>
           <p className="text-[1.05rem] leading-relaxed font-light max-w-[220px] opacity-0 animate-fade-up [animation-delay:0.25s] [animation-fill-mode:forwards]">
             We bring professionals with strong domain expertise to share insights that will help innovators build and bring far more resilient products to the market.
