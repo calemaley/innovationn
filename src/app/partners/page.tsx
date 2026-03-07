@@ -15,7 +15,7 @@ export default function PartnersPage() {
   
   // Place the logos in the first few cells
   partnerLogos.forEach((logo, index) => {
-    gridCells[index] = logo || null;
+    if (logo) gridCells[index] = logo;
   });
 
   return (
@@ -27,7 +27,7 @@ export default function PartnersPage() {
               key={logo?.id || `empty-${index}`} 
               className={`flex items-center justify-center p-8 min-h-[180px] border-r border-b border-[#e2e1dd] transition-colors duration-200 ${logo ? 'hover:bg-[#f5f4f0]' : 'bg-white'}`}
             >
-              {logo && (
+              {logo ? (
                 <div className="relative w-full h-full flex items-center justify-center">
                   <Image
                     src={logo.imageUrl}
@@ -38,7 +38,7 @@ export default function PartnersPage() {
                     priority={index < 6}
                   />
                 </div>
-              )}
+              ) : null}
             </div>
           ))}
         </div>
