@@ -22,12 +22,12 @@ export default function Home() {
         </div>
         <div className="relative h-[350px] md:h-[520px] w-full opacity-0 animate-fade-in [animation-delay:0.15s] [animation-fill-mode:forwards]">
           <Image
-            src={heroImage?.imageUrl || "https://picsum.photos/seed/innovate1/1200/800"}
-            alt={heroImage?.description || "Innovation Community"}
+            src={heroImage?.imageUrl || "https://i.ibb.co/jPYVg55M/mage-1.jpg"}
+            alt={heroImage?.description || "InnovationZ Hero"}
             fill
             className="object-cover rounded-[2px]"
             priority
-            data-ai-hint="virtual conference"
+            data-ai-hint="modern innovation"
           />
         </div>
       </section>
