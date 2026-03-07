@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react";
@@ -59,19 +60,18 @@ export default function SpeakerOpportunity() {
     }
   };
 
-  const onSubmit = (data: FormData) => {
+  const handleManualSubmit = () => {
     toast({
-      title: "Success",
-      description: "We've received your information. Let's schedule a time.",
+      title: "Submitting...",
+      description: "Redirecting you to the schedule page.",
     });
-    // Redirect to schedule meeting page
-    setTimeout(() => router.push("/schedule-meeting"), 1500);
+    router.push("/schedule-meeting");
   };
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center px-6 py-12 md:px-[60px]">
       <h1 className="font-headline text-3xl md:text-4xl mb-8 animate-fade-up">
-        Let's get acquainted
+        Let&apos;s get acquainted
       </h1>
 
       <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden bg-muted mb-0 animate-fade-in [animation-delay:0.25s]">
@@ -98,7 +98,7 @@ export default function SpeakerOpportunity() {
             if (e.key === "Enter") {
               e.preventDefault();
               if (activeStep === steps.length - 1) {
-                form.handleSubmit(onSubmit)();
+                handleManualSubmit();
               } else {
                 handleNext();
               }
@@ -107,7 +107,7 @@ export default function SpeakerOpportunity() {
         />
         <span 
           className="text-muted-foreground text-2xl cursor-pointer hover:text-foreground transition-colors select-none"
-          onClick={() => activeStep === steps.length - 1 ? form.handleSubmit(onSubmit)() : handleNext()}
+          onClick={() => activeStep === steps.length - 1 ? handleManualSubmit() : handleNext()}
         >
           &#x21B5;
         </span>
@@ -130,7 +130,7 @@ export default function SpeakerOpportunity() {
           ))}
         </div>
         <button
-          onClick={form.handleSubmit(onSubmit)}
+          onClick={handleManualSubmit}
           className="ml-auto italic text-[0.88rem] text-muted-foreground hover:text-foreground transition-colors"
         >
           Submit

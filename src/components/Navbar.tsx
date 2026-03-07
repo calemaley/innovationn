@@ -1,3 +1,4 @@
+
 "use client"
 
 import Link from 'next/link';
@@ -20,7 +21,7 @@ export default function Navbar() {
       <Link href="/" className="font-headline text-2xl tracking-tight text-foreground">
         InnovationZ
       </Link>
-      <ul className="hidden lg:flex gap-8 list-none">
+      <ul className="flex gap-8 list-none">
         {navLinks.map((link) => (
           <li key={link.href}>
             <Link
