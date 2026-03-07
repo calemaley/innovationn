@@ -7,28 +7,28 @@
       "imageHint": "modern innovation"
     },
     {
-      "id": "partner-1",
-      "description": "Tech Partner Logo 1",
-      "imageUrl": "https://picsum.photos/seed/p1/200/100",
-      "imageHint": "tech logo"
+      "id": "partner-kdk",
+      "description": "KDK Logo",
+      "imageUrl": "https://i.ibb.co/kgK9HGg4/KDK-logo-1.png",
+      "imageHint": "kdk logo"
     },
     {
-      "id": "partner-2",
-      "description": "Tech Partner Logo 2",
-      "imageUrl": "https://picsum.photos/seed/p2/200/100",
+      "id": "partner-zetech",
+      "description": "Zetech University Logo",
+      "imageUrl": "https://i.ibb.co/XkdnkTdD/Zetech-University-Logo-Vert-w-tag-RGB-1-3-1.png",
+      "imageHint": "university logo"
+    },
+    {
+      "id": "partner-images3",
+      "description": "Partner Logo 3",
+      "imageUrl": "https://i.ibb.co/v66sxnvZ/images-3-1.png",
       "imageHint": "corporate logo"
     },
     {
-      "id": "partner-3",
-      "description": "Tech Partner Logo 3",
-      "imageUrl": "https://picsum.photos/seed/p3/200/100",
-      "imageHint": "startup logo"
-    },
-    {
-      "id": "partner-4",
-      "description": "Tech Partner Logo 4",
-      "imageUrl": "https://picsum.photos/seed/p4/200/100",
-      "imageHint": "innovation logo"
+      "id": "partner-images5",
+      "description": "Partner Logo 5",
+      "imageUrl": "https://i.ibb.co/fVWG7j7R/images-5-1.png",
+      "imageHint": "tech logo"
     },
     {
       "id": "hands-connection",
@@ -47,6 +47,12 @@
       "description": "Nairobi city skyline for support page",
       "imageUrl": "https://i.ibb.co/JW3pfWWG/mage-4.jpg",
       "imageHint": "city skyline"
+    },
+    {
+      "id": "thank-you-hero",
+      "description": "Thank you page illustration",
+      "imageUrl": "https://i.ibb.co/NnZXqjh2/mage-5.jpg",
+      "imageHint": "minimalist illustration"
     }
   ]
 }
