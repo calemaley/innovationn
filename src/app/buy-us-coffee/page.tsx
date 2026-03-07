@@ -2,26 +2,33 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { useToast } from "@/hooks/use-toast";
 
 export default function BuyUsCoffeePage() {
   const { toast } = useToast();
+  const router = useRouter();
   const [usdAmount, setUsdAmount] = useState("50");
+  const [paymentMethod, setPaymentMethod] = useState("Pay with card");
   const coffeeImage = PlaceHolderImages.find(img => img.id === "buy-us-coffee-hero");
   
   const exchangeRate = 129;
   const kesAmount = (parseFloat(usdAmount) * exchangeRate).toLocaleString('en-KE', { 
-    minimumFractionDigits: 2,
+    minimumFractionDigits: 2, 
     maximumFractionDigits: 2 
   });
 
   const handleBuyCoffee = () => {
-    toast({
-      title: "Processing...",
-      description: `Initiating payment for USD ${usdAmount}. Thank you for your support!`,
-    });
+    if (paymentMethod === "Pay with card") {
+      router.push("/pay-with-card");
+    } else {
+      toast({
+        title: "Processing...",
+        description: `Initiating ${paymentMethod} payment for USD ${usdAmount}.`,
+      });
+    }
   };
 
   return (
@@ -64,6 +71,8 @@ export default function BuyUsCoffeePage() {
         {/* Payment Method Select */}
         <div className="relative flex-1 lg:flex-none">
           <select 
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
             className="w-full lg:min-w-[180px] appearance-none bg-[#eeede9] border-none py-[18px] pl-6 pr-12 text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body"
           >
             <option>Pay with card</option>
