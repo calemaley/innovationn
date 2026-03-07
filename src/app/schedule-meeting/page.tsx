@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from "react";
@@ -42,12 +41,12 @@ export default function ScheduleMeetingPage() {
       <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden mb-3 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
         <div className="relative h-[350px] md:h-[510px] w-full">
           <Image
-            src={meetingImage?.imageUrl || "https://picsum.photos/seed/meeting/920/510"}
+            src={meetingImage?.imageUrl || "https://i.ibb.co/T3LpkVK/Meeting-info.png"}
             alt="Schedule Meeting"
             fill
             className="object-cover"
             priority
-            data-ai-hint="business meeting"
+            data-ai-hint="meeting schedule"
           />
         </div>
       </div>

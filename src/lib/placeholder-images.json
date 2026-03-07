@@ -38,9 +38,9 @@
     },
     {
       "id": "meeting-hero",
-      "description": "Speaker addressing a large audience",
-      "imageUrl": "https://picsum.photos/seed/meeting/920/510",
-      "imageHint": "speaker audience"
+      "description": "Meeting information visual",
+      "imageUrl": "https://i.ibb.co/T3LpkVK/Meeting-info.png",
+      "imageHint": "meeting schedule"
     }
   ]
 }
