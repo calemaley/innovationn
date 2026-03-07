@@ -41,7 +41,7 @@ export default function ScheduleMeetingPage() {
   };
 
   return (
-    <main className="flex-1 flex flex-col items-center px-6 md:px-12 pb-16 pt-0 animate-fade-in">
+    <main className="flex-1 flex flex-col items-center px-6 md:px-12 pb-8 md:pb-16 pt-0 animate-fade-in">
       {/* Image Container */}
       <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden mb-3 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
         <div className="relative w-full aspect-[16/9] md:aspect-[5/3]">
@@ -56,65 +56,78 @@ export default function ScheduleMeetingPage() {
         </div>
       </div>
 
-      {/* Controls Row */}
-      <div className="w-full max-w-[920px] flex flex-col lg:flex-row items-stretch gap-3 md:gap-2 opacity-0 animate-fade-up [animation-delay:0.35s] [animation-fill-mode:forwards]">
-        
-        {/* Month Select */}
-        <div className="relative flex-1 lg:flex-none">
-          <select
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(e.target.value)}
-            className="w-full lg:min-w-[140px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-11 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
+      {/* Controls Container */}
+      <div className="w-full max-w-[920px] opacity-0 animate-fade-up [animation-delay:0.35s] [animation-fill-mode:forwards]">
+        {/* Controls Row */}
+        <div className="w-full flex flex-col md:flex-row items-stretch gap-4 md:gap-3 mb-4 md:mb-0">
+
+          {/* Month Select */}
+          <div className="relative flex-1">
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+              className="w-full appearance-none bg-[#eeede9] border-none py-4 md:py-[18px] pl-6 pr-11 text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
+            >
+              {months.map(m => <option key={m} value={m}>{m}</option>)}
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
+          </div>
+
+          {/* Day Select */}
+          <div className="relative flex-1">
+            <select
+              value={selectedDay}
+              onChange={(e) => setSelectedDay(e.target.value)}
+              className="w-full appearance-none bg-[#eeede9] border-none py-4 md:py-[18px] pl-6 pr-11 text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
+            >
+              {days.map(d => (
+                <option key={d} value={String(d).padStart(2, '0')}>
+                  {String(d).padStart(2, '0')}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
+          </div>
+
+          {/* Timezone Select */}
+          <div className="relative flex-1">
+            <select
+              value={selectedTimezone}
+              onChange={(e) => setSelectedTimezone(e.target.value)}
+              className="w-full appearance-none bg-[#eeede9] border-none py-4 md:py-[18px] pl-6 pr-11 text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
+            >
+              {timezones.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
+          </div>
+
+          {/* Time Display */}
+          <div className="flex-1 bg-[#eeede9] flex items-center justify-center md:justify-start px-4 md:px-6 py-4 md:py-[18px] text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px]">
+            <span>1600–1700 hrs</span>
+          </div>
+
+          {/* CTA Button - Desktop */}
+          <button
+            onClick={handleSchedule}
+            className="hidden md:flex bg-[#2255e0] hover:bg-[#1a44c8] text-white py-4 md:py-[18px] px-6 md:px-8 text-[0.95rem] md:text-[1.05rem] font-medium items-center justify-center gap-2 md:gap-3 rounded-[2px] transition-colors"
           >
-            {months.map(m => <option key={m} value={m}>{m}</option>)}
-          </select>
-          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
+            Schedule meeting
+            <span className="flex items-center justify-center w-[24px] md:w-[26px] h-[24px] md:h-[26px] rounded-full border-[1.5px] border-white/60 text-[0.75rem] md:text-[0.85rem]">
+              <ArrowRight className="w-3 h-3" />
+            </span>
+          </button>
         </div>
 
-        {/* Day Select */}
-        <div className="relative flex-1 lg:flex-none">
-          <select
-            value={selectedDay}
-            onChange={(e) => setSelectedDay(e.target.value)}
-            className="w-full lg:min-w-[110px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-11 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
-          >
-            {days.map(d => (
-              <option key={d} value={String(d).padStart(2, '0')}>
-                {String(d).padStart(2, '0')}
-              </option>
-            ))}
-          </select>
-          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
-        </div>
-
-        {/* Timezone Select */}
-        <div className="relative flex-1 lg:flex-none">
-          <select
-            value={selectedTimezone}
-            onChange={(e) => setSelectedTimezone(e.target.value)}
-            className="w-full lg:min-w-[110px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-11 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
-          >
-            {timezones.map(t => <option key={t} value={t}>{t}</option>)}
-          </select>
-          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
-        </div>
-
-        {/* Time Display */}
-        <div className="flex-1 bg-[#eeede9] flex items-center justify-center md:justify-start px-4 md:px-6 py-3 md:py-[18px] text-[0.8rem] md:text-[0.95rem] text-[#111110] rounded-[2px]">
-          <span>1600–1700 hrs</span>
-        </div>
-
-        {/* CTA Button */}
+        {/* CTA Button - Mobile */}
         <button
           onClick={handleSchedule}
-          className="bg-[#2255e0] hover:bg-[#1a44c8] text-white py-3 md:py-[18px] px-6 md:px-8 text-[0.85rem] md:text-[0.95rem] font-medium flex items-center justify-center gap-2 md:gap-3 rounded-[2px] transition-colors"
+          className="md:hidden w-full bg-[#2255e0] hover:bg-[#1a44c8] text-white py-4 px-6 text-[0.95rem] font-medium flex items-center justify-center gap-2 rounded-[2px] transition-colors mt-4"
         >
           Schedule meeting
-          <span className="flex items-center justify-center w-[24px] md:w-[26px] h-[24px] md:h-[26px] rounded-full border-[1.5px] border-white/60 text-[0.75rem] md:text-[0.85rem]">
+          <span className="flex items-center justify-center w-[24px] h-[24px] rounded-full border-[1.5px] border-white/60 text-[0.75rem]">
             <ArrowRight className="w-3 h-3" />
           </span>
         </button>
-
       </div>
     </main>
   );
