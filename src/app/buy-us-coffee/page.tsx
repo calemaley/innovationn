@@ -23,6 +23,8 @@ export default function BuyUsCoffeePage() {
   const handleBuyCoffee = () => {
     if (paymentMethod === "Pay with card") {
       router.push("/pay-with-card");
+    } else if (paymentMethod === "Pay with M-Pesa") {
+      router.push("/pay-with-mpesa");
     } else {
       toast({
         title: "Processing...",
