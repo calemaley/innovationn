@@ -3,13 +3,13 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function PartnersPage() {
   const partnerLogos = [
+    PlaceHolderImages.find(img => img.id === "partner-images5"),
+    PlaceHolderImages.find(img => img.id === "partner-zetech"),
     PlaceHolderImages.find(img => img.id === "partner-images3"),
     PlaceHolderImages.find(img => img.id === "partner-kdk"),
-    PlaceHolderImages.find(img => img.id === "partner-zetech"),
-    PlaceHolderImages.find(img => img.id === "partner-images5"),
   ];
 
-  // The grid has 18 cells (3 rows of 6)
+  // The grid has 18 cells (3 rows of 6) as per the design requirement
   const totalCells = 18;
   const gridCells = Array(totalCells).fill(null);
   
@@ -25,7 +25,7 @@ export default function PartnersPage() {
           {gridCells.map((logo, index) => (
             <div 
               key={logo?.id || `empty-${index}`} 
-              className={`flex items-center justify-center p-8 min-h-[180px] border-r border-b border-[#e2e1dd] transition-colors duration-200 ${logo ? 'hover:bg-[#f5f4f0] group' : 'bg-white'}`}
+              className={`flex items-center justify-center p-8 min-h-[180px] border-r border-b border-[#e2e1dd] transition-colors duration-200 ${logo ? 'hover:bg-[#f5f4f0]' : 'bg-white'}`}
             >
               {logo && (
                 <div className="relative w-full h-full flex items-center justify-center">
@@ -34,7 +34,7 @@ export default function PartnersPage() {
                     alt={logo.description}
                     width={120}
                     height={100}
-                    className="object-contain max-w-[120px] max-h-[100px] transition-all duration-300"
+                    className="object-contain max-w-[120px] max-h-[100px]"
                     priority={index < 6}
                   />
                 </div>
