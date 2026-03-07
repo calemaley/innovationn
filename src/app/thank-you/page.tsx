@@ -9,6 +9,10 @@ export default function ThankYouPage() {
   const router = useRouter();
   const thankYouImage = PlaceHolderImages.find(img => img.id === "thank-you-hero");
 
+  const handleFinish = () => {
+    router.push("/");
+  };
+
   return (
     <main className="flex-1 flex flex-col items-center px-6 md:px-12 pb-16 pt-5 animate-fade-in">
       {/* Heading Row */}
@@ -50,14 +54,14 @@ export default function ThankYouPage() {
         
         <div className="flex gap-3">
           <button 
-            onClick={() => router.push("/")}
+            onClick={handleFinish}
             className="bg-[#e8e7e3] hover:bg-[#dddcd8] text-[#111110] py-[18px] px-9 text-[0.95rem] rounded-[2px] transition-colors whitespace-nowrap"
           >
             No
           </button>
           
           <button 
-            onClick={() => router.push("/")}
+            onClick={handleFinish}
             className="bg-[#2255e0] hover:bg-[#1a44c8] text-white py-[18px] px-8 text-[0.95rem] font-medium flex items-center justify-center gap-3 rounded-[2px] transition-colors whitespace-nowrap"
           >
             Yes please
