@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { useToast } from "@/hooks/use-toast";
@@ -15,6 +16,7 @@ const timezones = ["EAT", "UTC", "GMT", "EST", "PST", "CET"];
 
 export default function ScheduleMeetingPage() {
   const { toast } = useToast();
+  const router = useRouter();
   const [days, setDays] = useState<number[]>([]);
   const [selectedMonth, setSelectedMonth] = useState("March");
   const [selectedDay, setSelectedDay] = useState("09");
@@ -32,6 +34,10 @@ export default function ScheduleMeetingPage() {
       title: "Meeting Scheduled",
       description: `Confirmed for ${selectedMonth} ${selectedDay} at 16:00 ${selectedTimezone}.`,
     });
+    // Redirect to support page after a short delay
+    setTimeout(() => {
+      router.push("/buy-us-coffee");
+    }, 1500);
   };
 
   return (

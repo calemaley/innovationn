@@ -1,0 +1,52 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-virtual-conference",
+      "description": "InnovationZ Hero Image",
+      "imageUrl": "https://i.ibb.co/jPYVg55M/mage-1.jpg",
+      "imageHint": "modern innovation"
+    },
+    {
+      "id": "partner-1",
+      "description": "Tech Partner Logo 1",
+      "imageUrl": "https://picsum.photos/seed/p1/200/100",
+      "imageHint": "tech logo"
+    },
+    {
+      "id": "partner-2",
+      "description": "Tech Partner Logo 2",
+      "imageUrl": "https://picsum.photos/seed/p2/200/100",
+      "imageHint": "corporate logo"
+    },
+    {
+      "id": "partner-3",
+      "description": "Tech Partner Logo 3",
+      "imageUrl": "https://picsum.photos/seed/p3/200/100",
+      "imageHint": "startup logo"
+    },
+    {
+      "id": "partner-4",
+      "description": "Tech Partner Logo 4",
+      "imageUrl": "https://picsum.photos/seed/p4/200/100",
+      "imageHint": "innovation logo"
+    },
+    {
+      "id": "hands-connection",
+      "description": "Two hands reaching towards each other for Speaker Opportunity",
+      "imageUrl": "https://i.ibb.co/q3kMym7J/mage-2.jpg",
+      "imageHint": "connecting hands"
+    },
+    {
+      "id": "meeting-hero",
+      "description": "Meeting information visual",
+      "imageUrl": "https://i.ibb.co/6cGDPDrR/mage-3.jpg",
+      "imageHint": "meeting schedule"
+    },
+    {
+      "id": "buy-us-coffee-hero",
+      "description": "Nairobi city skyline for support page",
+      "imageUrl": "https://i.ibb.co/JW3pfWWG/mage-4.jpg",
+      "imageHint": "city skyline"
+    }
+  ]
+}
