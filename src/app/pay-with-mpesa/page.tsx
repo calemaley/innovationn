@@ -33,7 +33,7 @@ export default function PayWithMpesaPage() {
       title: "M-Pesa STK Push Sent",
       description: "Please check your phone to complete the payment.",
     });
-    setTimeout(() => router.push("/"), 3000);
+    setTimeout(() => router.push("/thank-you"), 2000);
   };
 
   const formatMpesa = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +45,7 @@ export default function PayWithMpesaPage() {
   };
 
   return (
-    <div className="min-h-[80vh] flex flex-col items-center px-6 py-12 md:px-[60px]">
+    <div className="min-h-[80vh] flex flex-col items-center px-6 md:px-[60px] py-12">
       <h1 className="font-headline text-[1.9rem] mb-6 animate-fade-up text-[#111110]">
         Pay with M-Pesa
       </h1>

@@ -41,6 +41,18 @@
       "description": "Meeting information visual",
       "imageUrl": "https://i.ibb.co/6cGDPDrR/mage-3.jpg",
       "imageHint": "meeting schedule"
+    },
+    {
+      "id": "buy-us-coffee-hero",
+      "description": "Nairobi city skyline for support page",
+      "imageUrl": "https://i.ibb.co/JW3pfWWG/mage-4.jpg",
+      "imageHint": "city skyline"
+    },
+    {
+      "id": "thank-you-hero",
+      "description": "Thank you page illustration",
+      "imageUrl": "https://i.ibb.co/NnZXqjh2/mage-5.jpg",
+      "imageHint": "minimalist illustration"
     }
   ]
 }

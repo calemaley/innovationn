@@ -62,7 +62,7 @@ export default function PayWithCardPage() {
       title: "Success",
       description: "Payment processed successfully. Thank you!",
     });
-    setTimeout(() => router.push("/"), 2000);
+    setTimeout(() => router.push("/thank-you"), 1500);
   };
 
   return (
