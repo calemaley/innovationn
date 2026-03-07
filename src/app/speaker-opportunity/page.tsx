@@ -73,17 +73,45 @@ export default function SpeakerOpportunity() {
     if (isStepValid) {
       if (activeStep < steps.length - 1) {
         setActiveStep(activeStep + 1);
+      } else if (activeStep === steps.length - 1) {
+        // All fields complete, trigger submit
+        await handleFinalSubmit();
       }
     }
   };
 
-  const handleManualSubmit = () => {
-    toast({
-      title: "Submitting...",
-      description: "Redirecting you to the schedule page.",
-    });
-    router.push("/schedule-meeting");
+  const handleFinalSubmit = async () => {
+    const isFormValid = await form.trigger();
+    if (isFormValid) {
+      toast({
+        title: "Submitting...",
+        description: "Redirecting you to the schedule page.",
+      });
+      setTimeout(() => {
+        router.push("/schedule-meeting");
+      }, 1000);
+    }
   };
+
+  const handleManualSubmit = async () => {
+    const isFormValid = await form.trigger();
+    if (isFormValid) {
+      toast({
+        title: "Submitting...",
+        description: "Redirecting you to the schedule page.",
+      });
+      setTimeout(() => {
+        router.push("/schedule-meeting");
+      }, 1000);
+    }
+  };
+
+  // Check if all fields are filled
+  const formValues = form.watch();
+  const allFieldsFilled = steps.every(
+    (step) => formValues[step.id as keyof FormData]?.toString().trim() !== ""
+  );
+  const isSubmitButtonEnabled = allFieldsFilled;
 
   return (
     <div className="min-h-screen flex flex-col items-center px-6 py-8 md:py-12 md:px-[60px]">
@@ -121,19 +149,23 @@ export default function SpeakerOpportunity() {
               <>
                 <select
                   {...form.register(currentField)}
-                  className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body text-muted-foreground focus:ring-0 appearance-none"
+                  autoFocus
+                  className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body text-muted-foreground focus:ring-0 appearance-none cursor-pointer"
+                  onChange={async (e) => {
+                    form.setValue(currentField, e.target.value);
+                    const isStepValid = await form.trigger(currentField);
+                    if (isStepValid && activeStep < steps.length - 1) {
+                      setTimeout(() => setActiveStep(activeStep + 1), 300);
+                    }
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      if (activeStep === steps.length - 1) {
-                        handleManualSubmit();
-                      } else {
-                        handleNext();
-                      }
+                      handleNext();
                     }
                   }}
                 >
-                  <option value="" disabled>
+                  <option value="">
                     {steps[activeStep].placeholder}
                   </option>
                   {organizationTypes.map((type) => (
@@ -144,7 +176,7 @@ export default function SpeakerOpportunity() {
                 </select>
                 <button
                   type="button"
-                  onClick={() => activeStep === steps.length - 1 ? handleManualSubmit() : handleNext()}
+                  onClick={handleNext}
                   className="text-muted-foreground text-2xl md:text-3xl hover:text-foreground transition-colors p-2 flex-shrink-0"
                   aria-label="Next step"
                 >
@@ -159,20 +191,17 @@ export default function SpeakerOpportunity() {
                   placeholder={steps[activeStep].placeholder}
                   className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body placeholder:text-muted-foreground focus:ring-0"
                   autoComplete="off"
+                  autoFocus
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      if (activeStep === steps.length - 1) {
-                        handleManualSubmit();
-                      } else {
-                        handleNext();
-                      }
+                      handleNext();
                     }
                   }}
                 />
                 <button
                   type="button"
-                  onClick={() => activeStep === steps.length - 1 ? handleManualSubmit() : handleNext()}
+                  onClick={handleNext}
                   className="text-muted-foreground text-2xl md:text-3xl hover:text-foreground transition-colors p-2 flex-shrink-0"
                   aria-label="Next step"
                 >
@@ -211,7 +240,13 @@ export default function SpeakerOpportunity() {
         <div className="pt-10 md:pt-12 border-t border-border animate-fade-up [animation-delay:0.5s]">
           <button
             onClick={handleManualSubmit}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-5 md:py-6 px-6 md:px-8 text-lg md:text-xl font-medium rounded-lg transition-all duration-200 active:scale-95"
+            disabled={!isSubmitButtonEnabled}
+            className={cn(
+              "w-full py-5 md:py-6 px-6 md:px-8 text-lg md:text-xl font-medium rounded-lg transition-all duration-200 active:scale-95",
+              isSubmitButtonEnabled
+                ? "bg-primary hover:bg-primary/90 text-primary-foreground cursor-pointer"
+                : "bg-muted text-muted-foreground cursor-not-allowed opacity-60"
+            )}
           >
             Submit Application
           </button>
