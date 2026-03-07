@@ -7,9 +7,9 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/events', label: 'Events' },
-  { href: '/case-studies', label: 'Case Studies' },
-  { href: '/partners', label: 'Partners' },
-  { href: '/marketplace', label: 'Marketplace' },
+  { href: '/case-studies', label: 'Case studies' },
+  { href: '/partners', label: 'Our Partners' },
+  { href: '/marketplace', label: 'Our Marketplace' },
 ];
 
 export default function Navbar() {
@@ -20,7 +20,7 @@ export default function Navbar() {
       <Link href="/" className="font-headline text-2xl tracking-tight text-foreground">
         InnovationZ
       </Link>
-      <ul className="hidden xl:flex gap-8 list-none">
+      <ul className="hidden lg:flex gap-8 list-none">
         {navLinks.map((link) => (
           <li key={link.href}>
             <Link
@@ -35,11 +35,6 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
-      <div className="xl:hidden">
-        <Link href="/speaker-opportunity" className="text-sm font-medium text-primary border border-primary px-4 py-1.5 rounded-full hover:bg-primary hover:text-white transition-all">
-          Get Started
-        </Link>
-      </div>
     </nav>
   );
 }
