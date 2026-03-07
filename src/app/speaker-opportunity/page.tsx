@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from "react";
@@ -61,7 +60,6 @@ export default function SpeakerOpportunity() {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log("Form Submitted:", data);
     toast({
       title: "Success",
       description: "We've received your information. Let's schedule a time.",
@@ -79,8 +77,8 @@ export default function SpeakerOpportunity() {
       <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden bg-muted mb-0 animate-fade-in [animation-delay:0.25s]">
         <div className="relative h-[340px] w-full">
           <Image
-            src={handsImage?.imageUrl || "https://picsum.photos/seed/connection/920/340"}
-            alt="Hands reaching"
+            src={handsImage?.imageUrl || "https://i.ibb.co/q3kMym7J/mage-2.jpg"}
+            alt="Connecting hands"
             fill
             className="object-cover"
             priority
@@ -133,11 +131,7 @@ export default function SpeakerOpportunity() {
         </div>
         <button
           onClick={form.handleSubmit(onSubmit)}
-          className={cn(
-            "ml-auto italic text-[0.88rem] text-muted-foreground hover:text-foreground transition-colors",
-            activeStep !== steps.length - 1 && "opacity-30 cursor-default"
-          )}
-          disabled={activeStep !== steps.length - 1}
+          className="ml-auto italic text-[0.88rem] text-muted-foreground hover:text-foreground transition-colors"
         >
           Submit
         </button>
