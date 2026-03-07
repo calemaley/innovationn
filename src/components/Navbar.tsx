@@ -1,3 +1,4 @@
+
 "use client"
 
 import Link from 'next/link';
@@ -7,9 +8,11 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/events', label: 'Events' },
+  { href: '/speaker-opportunity', label: 'Become a Speaker' },
+  { href: '/topic-suggester', label: 'Topic Suggester' },
   { href: '/case-studies', label: 'Case Studies' },
-  { href: '/partners', label: 'Our Partners' },
-  { href: '/marketplace', label: 'Our Marketplace' },
+  { href: '/partners', label: 'Partners' },
+  { href: '/marketplace', label: 'Marketplace' },
 ];
 
 export default function Navbar() {
@@ -20,13 +23,13 @@ export default function Navbar() {
       <Link href="/" className="font-headline text-2xl tracking-tight text-foreground">
         InnovationZ
       </Link>
-      <ul className="hidden md:flex gap-11 list-none">
+      <ul className="hidden xl:flex gap-8 list-none">
         {navLinks.map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}
               className={cn(
-                "text-[0.9rem] font-normal transition-colors hover:text-primary relative",
+                "text-[0.9rem] font-normal transition-colors hover:text-primary relative whitespace-nowrap",
                 pathname === link.href ? "text-foreground after:content-[''] after:block after:w-1.5 after:h-1.5 after:bg-primary after:rounded-full after:absolute after:-right-2.5 after:top-1/2 after:-translate-y-1/2" : "text-muted-foreground"
               )}
             >
@@ -35,7 +38,12 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
-      {/* Mobile nav could be added here using a Sheet if needed, but keeping it simple for now based on snippet */}
+      {/* Fallback for smaller screens if items overflow */}
+      <div className="xl:hidden">
+        <Link href="/speaker-opportunity" className="text-sm font-medium text-primary border border-primary px-4 py-1.5 rounded-full hover:bg-primary hover:text-white transition-all">
+          Get Started
+        </Link>
+      </div>
     </nav>
   );
 }
