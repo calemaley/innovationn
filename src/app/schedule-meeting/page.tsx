@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
 const months = [
@@ -41,7 +40,7 @@ export default function ScheduleMeetingPage() {
       <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden mb-3 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
         <div className="relative h-[350px] md:h-[510px] w-full">
           <Image
-            src={meetingImage?.imageUrl || "https://i.ibb.co/T3LpkVK/Meeting-info.png"}
+            src={meetingImage?.imageUrl || "https://i.ibb.co/6cGDPDrR/mage-3.jpg"}
             alt="Schedule Meeting"
             fill
             className="object-cover"
