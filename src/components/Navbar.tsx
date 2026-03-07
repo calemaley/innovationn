@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from 'next/link';
@@ -8,8 +7,6 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/events', label: 'Events' },
-  { href: '/speaker-opportunity', label: 'Become a Speaker' },
-  { href: '/topic-suggester', label: 'Topic Suggester' },
   { href: '/case-studies', label: 'Case Studies' },
   { href: '/partners', label: 'Partners' },
   { href: '/marketplace', label: 'Marketplace' },
@@ -38,7 +35,6 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
-      {/* Fallback for smaller screens if items overflow */}
       <div className="xl:hidden">
         <Link href="/speaker-opportunity" className="text-sm font-medium text-primary border border-primary px-4 py-1.5 rounded-full hover:bg-primary hover:text-white transition-all">
           Get Started
