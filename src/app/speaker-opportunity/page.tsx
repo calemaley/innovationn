@@ -1,121 +1,147 @@
+
 "use client"
 
+import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
+const steps = [
+  { id: "name", label: "Name", placeholder: "Enter name" },
+  { id: "industry", label: "Industry", placeholder: "Enter industry" },
+  { id: "country", label: "Country", placeholder: "Enter country" },
+  { id: "organization", label: "Organization", placeholder: "Enter organization type" },
+  { id: "orgName", label: "Organization's name", placeholder: "Enter organization's name" },
+  { id: "email", label: "Email", placeholder: "Enter email" },
+];
+
 const formSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Invalid email address." }),
-  expertise: z.string().min(5, { message: "Please tell us a bit more about your expertise." }),
-  abstract: z.string().min(20, { message: "Please provide a short abstract of what you'd like to speak about." }),
+  name: z.string().min(2, "Name is required"),
+  industry: z.string().min(2, "Industry is required"),
+  country: z.string().min(2, "Country is required"),
+  organization: z.string().min(2, "Organization type is required"),
+  orgName: z.string().min(2, "Organization name is required"),
+  email: z.string().email("Invalid email address"),
 });
 
+type FormData = z.infer<typeof formSchema>;
+
 export default function SpeakerOpportunity() {
+  const [activeStep, setActiveStep] = useState(0);
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const router = useRouter();
+  const handsImage = PlaceHolderImages.find(img => img.id === "hands-connection");
+
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      industry: "",
+      country: "",
+      organization: "",
+      orgName: "",
       email: "",
-      expertise: "",
-      abstract: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  const currentField = steps[activeStep].id as keyof FormData;
+
+  const handleNext = async () => {
+    const isStepValid = await form.trigger(currentField);
+    if (isStepValid) {
+      if (activeStep < steps.length - 1) {
+        setActiveStep(activeStep + 1);
+      }
+    }
+  };
+
+  const onSubmit = (data: FormData) => {
+    console.log("Form Submitted:", data);
     toast({
-      title: "Interest Submitted",
-      description: "Thank you for your interest. Our team will review your application and get back to you shortly.",
+      title: "Success",
+      description: "We've received your information. Talk soon!",
     });
-    form.reset();
-  }
+    // Redirect after a short delay
+    setTimeout(() => router.push("/"), 2000);
+  };
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12">
-      <div className="space-y-4 mb-8">
-        <h1 className="font-headline text-4xl text-foreground">Speak at InnovationZ</h1>
-        <p className="text-muted-foreground leading-relaxed">
-          We're always looking for fresh voices and groundbreaking ideas. Fill out the form below to let us know you're interested in presenting at one of our upcoming events.
-        </p>
+    <div className="min-h-[80vh] flex flex-col items-center px-6 py-12 md:px-[60px]">
+      <h1 className="font-headline text-3xl md:text-4xl mb-8 animate-fade-up">
+        Let's get acquainted
+      </h1>
+
+      <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden bg-muted mb-0 animate-fade-in [animation-delay:0.25s]">
+        <div className="relative h-[340px] w-full">
+          <Image
+            src={handsImage?.imageUrl || "https://picsum.photos/seed/connection/920/340"}
+            alt="Hands reaching"
+            fill
+            className="object-cover"
+            priority
+            data-ai-hint="connecting hands"
+          />
+        </div>
       </div>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 bg-white p-8 rounded-lg shadow-sm border">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="John Doe" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email Address</FormLabel>
-                <FormControl>
-                  <Input placeholder="john@example.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="expertise"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Area of Expertise</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g. Fintech, Sustainable Energy, Biotech" {...field} />
-                </FormControl>
-                <FormDescription>What is your primary field of innovation?</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="abstract"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Proposed Talk Abstract</FormLabel>
-                <FormControl>
-                  <Textarea 
-                    placeholder="Briefly describe what you'd like to share with the community..." 
-                    className="min-h-[120px]"
-                    {...field} 
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full bg-primary hover:bg-primary/90">Submit Interest</Button>
-        </form>
-      </Form>
+      <div className="w-full max-w-[920px] bg-muted flex items-center px-7 py-6 mb-1 animate-fade-up [animation-delay:0.4s]">
+        <input
+          {...form.register(currentField)}
+          type={currentField === "email" ? "email" : "text"}
+          placeholder={steps[activeStep].placeholder}
+          className="flex-1 bg-transparent border-none outline-none text-lg font-light placeholder:text-muted-foreground focus:ring-0"
+          autoComplete="off"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              if (activeStep === steps.length - 1) {
+                form.handleSubmit(onSubmit)();
+              } else {
+                handleNext();
+              }
+            }
+          }}
+        />
+        <span 
+          className="text-muted-foreground text-2xl cursor-pointer hover:text-foreground transition-colors select-none"
+          onClick={() => activeStep === steps.length - 1 ? form.handleSubmit(onSubmit)() : handleNext()}
+        >
+          &#x21B5;
+        </span>
+      </div>
+
+      <div className="w-full max-w-[920px] flex flex-wrap items-center px-7 py-6 animate-fade-up [animation-delay:0.5s]">
+        <div className="flex flex-wrap gap-y-4">
+          {steps.map((step, index) => (
+            <button
+              key={step.id}
+              onClick={() => index < activeStep && setActiveStep(index)}
+              className={cn(
+                "text-[0.88rem] mr-11 whitespace-nowrap transition-colors",
+                index === activeStep ? "text-primary font-medium" : "text-muted-foreground hover:text-foreground",
+                index > activeStep && "cursor-default opacity-50"
+              )}
+            >
+              {step.label}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={form.handleSubmit(onSubmit)}
+          className={cn(
+            "ml-auto italic text-[0.88rem] text-muted-foreground hover:text-foreground transition-colors",
+            activeStep !== steps.length - 1 && "opacity-30 cursor-default"
+          )}
+          disabled={activeStep !== steps.length - 1}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 }

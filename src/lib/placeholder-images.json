@@ -29,6 +29,12 @@
       "description": "Tech Partner Logo 4",
       "imageUrl": "https://picsum.photos/seed/p4/200/100",
       "imageHint": "innovation logo"
+    },
+    {
+      "id": "hands-connection",
+      "description": "Two hands reaching towards each other",
+      "imageUrl": "https://picsum.photos/seed/connection/920/340",
+      "imageHint": "connecting hands"
     }
   ]
 }
