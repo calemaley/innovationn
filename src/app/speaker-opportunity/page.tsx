@@ -10,11 +10,29 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
+const organizationTypes = [
+  "Non-Profit / NGO",
+  "Government / Public Sector",
+  "Private Corporation",
+  "Educational Institution",
+  "Tech Startup",
+  "Consulting Firm",
+  "Healthcare",
+  "Financial Services",
+  "Manufacturing",
+  "Media / Publishing",
+  "Retail",
+  "Telecommunications",
+  "Energy / Utilities",
+  "Hospitality / Tourism",
+  "Other",
+];
+
 const steps = [
   { id: "name", label: "Name", placeholder: "Enter name" },
   { id: "industry", label: "Industry", placeholder: "Enter industry" },
   { id: "country", label: "Country", placeholder: "Enter country" },
-  { id: "organization", label: "Organization", placeholder: "Enter organization type" },
+  { id: "organization", label: "Organization Type", placeholder: "Select organization type" },
   { id: "orgName", label: "Organization's name", placeholder: "Enter organization's name" },
   { id: "email", label: "Email", placeholder: "Enter email" },
 ];
@@ -99,31 +117,69 @@ export default function SpeakerOpportunity() {
         {/* Input Field */}
         <div className="mb-10 md:mb-12">
           <div className="w-full bg-muted flex items-center px-5 md:px-7 py-6 md:py-7 rounded-lg">
-            <input
-              {...form.register(currentField)}
-              type={currentField === "email" ? "email" : "text"}
-              placeholder={steps[activeStep].placeholder}
-              className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body placeholder:text-muted-foreground focus:ring-0"
-              autoComplete="off"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  if (activeStep === steps.length - 1) {
-                    handleManualSubmit();
-                  } else {
-                    handleNext();
-                  }
-                }
-              }}
-            />
-            <button
-              type="button"
-              onClick={() => activeStep === steps.length - 1 ? handleManualSubmit() : handleNext()}
-              className="text-muted-foreground text-2xl md:text-3xl hover:text-foreground transition-colors p-2 flex-shrink-0"
-              aria-label="Next step"
-            >
-              &#x21B5;
-            </button>
+            {currentField === "organization" ? (
+              <>
+                <select
+                  {...form.register(currentField)}
+                  className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body text-muted-foreground focus:ring-0 appearance-none"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      if (activeStep === steps.length - 1) {
+                        handleManualSubmit();
+                      } else {
+                        handleNext();
+                      }
+                    }
+                  }}
+                >
+                  <option value="" disabled>
+                    {steps[activeStep].placeholder}
+                  </option>
+                  {organizationTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={() => activeStep === steps.length - 1 ? handleManualSubmit() : handleNext()}
+                  className="text-muted-foreground text-2xl md:text-3xl hover:text-foreground transition-colors p-2 flex-shrink-0"
+                  aria-label="Next step"
+                >
+                  &#x21B5;
+                </button>
+              </>
+            ) : (
+              <>
+                <input
+                  {...form.register(currentField)}
+                  type={currentField === "email" ? "email" : "text"}
+                  placeholder={steps[activeStep].placeholder}
+                  className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body placeholder:text-muted-foreground focus:ring-0"
+                  autoComplete="off"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      if (activeStep === steps.length - 1) {
+                        handleManualSubmit();
+                      } else {
+                        handleNext();
+                      }
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => activeStep === steps.length - 1 ? handleManualSubmit() : handleNext()}
+                  className="text-muted-foreground text-2xl md:text-3xl hover:text-foreground transition-colors p-2 flex-shrink-0"
+                  aria-label="Next step"
+                >
+                  &#x21B5;
+                </button>
+              </>
+            )}
           </div>
         </div>
 
