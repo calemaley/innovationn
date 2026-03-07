@@ -43,48 +43,48 @@ const events = [
 
 export default function EventsPage() {
   return (
-    <div className="px-6 md:px-[60px] py-12">
-      <div className="max-w-4xl mb-12">
-        <h1 className="font-headline text-4xl text-foreground mb-4">Upcoming Events</h1>
-        <p className="text-muted-foreground text-lg">
+    <div className="px-6 md:px-[60px] py-8 md:py-12">
+      <div className="max-w-4xl mb-8 md:mb-12">
+        <h1 className="font-headline text-2xl md:text-3xl lg:text-4xl text-foreground mb-3 md:mb-4">Upcoming Events</h1>
+        <p className="text-muted-foreground text-[0.9rem] md:text-base lg:text-lg leading-relaxed">
           Join our vibrant community at these curated events. From massive international summits to intimate local workshops, discover your next opportunity to learn and network.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
         {events.map((event) => (
-          <Card key={event.id} className="overflow-hidden group hover:border-primary/50 transition-all duration-300">
-            <CardHeader className="bg-muted/30 pb-4">
+          <Card key={event.id} className="overflow-hidden group hover:border-primary/50 transition-all duration-300 flex flex-col">
+            <CardHeader className="bg-muted/30 pb-3 md:pb-4">
               <div className="flex justify-between items-start mb-2">
-                <Badge variant="secondary" className="bg-accent/20 text-primary-foreground border-none">
+                <Badge variant="secondary" className="bg-accent/20 text-primary-foreground border-none text-[0.7rem] md:text-[0.75rem]">
                   {event.tag}
                 </Badge>
               </div>
-              <CardTitle className="font-headline text-2xl group-hover:text-primary transition-colors">
+              <CardTitle className="font-headline text-lg md:text-xl lg:text-2xl group-hover:text-primary transition-colors">
                 {event.title}
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-6 space-y-4">
-              <p className="text-muted-foreground leading-relaxed">
+            <CardContent className="pt-4 md:pt-6 space-y-3 md:space-y-4 flex-1">
+              <p className="text-muted-foreground text-[0.85rem] md:text-base leading-relaxed">
                 {event.description}
               </p>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <CalendarDays className="w-4 h-4 text-primary" />
+              <div className="space-y-2 text-[0.8rem] md:text-sm text-muted-foreground">
+                <div className="flex items-start gap-2">
+                  <CalendarDays className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary flex-shrink-0 mt-0.5" />
                   <span>{event.date}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary" />
+                <div className="flex items-start gap-2">
+                  <Clock className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary flex-shrink-0 mt-0.5" />
                   <span>{event.time}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-primary" />
+                <div className="flex items-start gap-2">
+                  <MapPin className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary flex-shrink-0 mt-0.5" />
                   <span>{event.location}</span>
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="bg-muted/10 border-t pt-4">
-              <span className="text-xs font-semibold uppercase tracking-widest text-primary opacity-60">Registration Opening Soon</span>
+            <CardFooter className="bg-muted/10 border-t pt-3 md:pt-4">
+              <span className="text-[0.65rem] md:text-xs font-semibold uppercase tracking-widest text-primary opacity-60">Registration Opening Soon</span>
             </CardFooter>
           </Card>
         ))}

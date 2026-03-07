@@ -44,7 +44,7 @@ export default function ScheduleMeetingPage() {
     <main className="flex-1 flex flex-col items-center px-6 md:px-12 pb-16 pt-0 animate-fade-in">
       {/* Image Container */}
       <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden mb-3 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
-        <div className="relative h-[350px] md:h-[510px] w-full">
+        <div className="relative w-full aspect-[16/9] md:aspect-[5/3]">
           <Image
             src={meetingImage?.imageUrl || "https://i.ibb.co/6cGDPDrR/mage-3.jpg"}
             alt="Schedule Meeting"
@@ -57,14 +57,14 @@ export default function ScheduleMeetingPage() {
       </div>
 
       {/* Controls Row */}
-      <div className="w-full max-w-[920px] flex flex-col lg:flex-row items-stretch gap-2 opacity-0 animate-fade-up [animation-delay:0.35s] [animation-fill-mode:forwards]">
+      <div className="w-full max-w-[920px] flex flex-col lg:flex-row items-stretch gap-3 md:gap-2 opacity-0 animate-fade-up [animation-delay:0.35s] [animation-fill-mode:forwards]">
         
         {/* Month Select */}
         <div className="relative flex-1 lg:flex-none">
-          <select 
+          <select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="w-full lg:min-w-[140px] appearance-none bg-[#eeede9] border-none py-[18px] pl-6 pr-11 text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body"
+            className="w-full lg:min-w-[140px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-11 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
           >
             {months.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
@@ -73,10 +73,10 @@ export default function ScheduleMeetingPage() {
 
         {/* Day Select */}
         <div className="relative flex-1 lg:flex-none">
-          <select 
+          <select
             value={selectedDay}
             onChange={(e) => setSelectedDay(e.target.value)}
-            className="w-full lg:min-w-[110px] appearance-none bg-[#eeede9] border-none py-[18px] pl-6 pr-11 text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body"
+            className="w-full lg:min-w-[110px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-11 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
           >
             {days.map(d => (
               <option key={d} value={String(d).padStart(2, '0')}>
@@ -89,10 +89,10 @@ export default function ScheduleMeetingPage() {
 
         {/* Timezone Select */}
         <div className="relative flex-1 lg:flex-none">
-          <select 
+          <select
             value={selectedTimezone}
             onChange={(e) => setSelectedTimezone(e.target.value)}
-            className="w-full lg:min-w-[110px] appearance-none bg-[#eeede9] border-none py-[18px] pl-6 pr-11 text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body"
+            className="w-full lg:min-w-[110px] appearance-none bg-[#eeede9] border-none py-3 md:py-[18px] pl-6 pr-11 text-[0.85rem] md:text-[0.95rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
           >
             {timezones.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
@@ -100,17 +100,17 @@ export default function ScheduleMeetingPage() {
         </div>
 
         {/* Time Display */}
-        <div className="flex-1 bg-[#eeede9] flex items-center px-6 py-[18px] text-[0.95rem] text-[#111110] rounded-[2px] whitespace-nowrap">
-          1600 hrs – 1700 hrs
+        <div className="flex-1 bg-[#eeede9] flex items-center justify-center md:justify-start px-4 md:px-6 py-3 md:py-[18px] text-[0.8rem] md:text-[0.95rem] text-[#111110] rounded-[2px]">
+          <span>1600–1700 hrs</span>
         </div>
 
         {/* CTA Button */}
-        <button 
+        <button
           onClick={handleSchedule}
-          className="bg-[#2255e0] hover:bg-[#1a44c8] text-white py-[18px] px-8 text-[0.95rem] font-medium flex items-center justify-center lg:justify-start gap-3 rounded-[2px] transition-colors whitespace-nowrap"
+          className="bg-[#2255e0] hover:bg-[#1a44c8] text-white py-3 md:py-[18px] px-6 md:px-8 text-[0.85rem] md:text-[0.95rem] font-medium flex items-center justify-center gap-2 md:gap-3 rounded-[2px] transition-colors"
         >
-          Schedule the meeting
-          <span className="flex items-center justify-center w-[26px] h-[26px] rounded-full border-[1.5px] border-white/60 text-[0.85rem]">
+          Schedule meeting
+          <span className="flex items-center justify-center w-[24px] md:w-[26px] h-[24px] md:h-[26px] rounded-full border-[1.5px] border-white/60 text-[0.75rem] md:text-[0.85rem]">
             <ArrowRight className="w-3 h-3" />
           </span>
         </button>
