@@ -68,12 +68,13 @@ export default function SpeakerOpportunity() {
   };
 
   return (
-    <div className="min-h-[80vh] flex flex-col items-center px-6 py-8 md:py-12 md:px-[60px]">
-      <h1 className="font-headline text-2xl md:text-3xl lg:text-4xl mb-6 md:mb-8 animate-fade-up">
+    <div className="min-h-screen flex flex-col items-center px-6 py-8 md:py-12 md:px-[60px]">
+      <h1 className="font-headline text-2xl md:text-3xl lg:text-4xl mb-8 md:mb-10 animate-fade-up">
         Let&apos;s get acquainted
       </h1>
 
-      <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden bg-muted mb-0 animate-fade-in [animation-delay:0.25s]">
+      {/* Image Container */}
+      <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden bg-muted mb-8 md:mb-10 animate-fade-in [animation-delay:0.25s]">
         <div className="relative w-full aspect-[16/9] md:aspect-[5/3]">
           <Image
             src={handsImage?.imageUrl || "https://i.ibb.co/q3kMym7J/mage-2.jpg"}
@@ -86,56 +87,79 @@ export default function SpeakerOpportunity() {
         </div>
       </div>
 
-      <div className="w-full max-w-[920px] bg-muted flex items-center px-4 md:px-7 py-4 md:py-6 mb-1 animate-fade-up [animation-delay:0.4s]">
-        <input
-          {...form.register(currentField)}
-          type={currentField === "email" ? "email" : "text"}
-          placeholder={steps[activeStep].placeholder}
-          className="flex-1 bg-transparent border-none outline-none text-base md:text-lg font-light placeholder:text-muted-foreground focus:ring-0"
-          autoComplete="off"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              if (activeStep === steps.length - 1) {
-                handleManualSubmit();
-              } else {
-                handleNext();
-              }
-            }
-          }}
-        />
-        <button
-          type="button"
-          onClick={() => activeStep === steps.length - 1 ? handleManualSubmit() : handleNext()}
-          className="text-muted-foreground text-xl md:text-2xl hover:text-foreground transition-colors p-1 flex-shrink-0"
-          aria-label="Next step"
-        >
-          &#x21B5;
-        </button>
-      </div>
-
-      <div className="w-full max-w-[920px] flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-0 px-4 md:px-7 py-4 md:py-6 animate-fade-up [animation-delay:0.5s]">
-        <div className="flex flex-wrap gap-3 md:gap-0">
-          {steps.map((step, index) => (
-            <button
-              key={step.id}
-              onClick={() => index < activeStep && setActiveStep(index)}
-              className={cn(
-                "text-[0.75rem] md:text-[0.88rem] md:mr-8 lg:mr-11 transition-colors",
-                index === activeStep ? "text-primary font-medium" : "text-muted-foreground hover:text-foreground",
-                index > activeStep && "cursor-default opacity-50"
-              )}
-            >
-              {step.label}
-            </button>
-          ))}
+      {/* Form Container */}
+      <div className="w-full max-w-[920px] flex-1 flex flex-col">
+        {/* Current Field Label */}
+        <div className="mb-4 md:mb-5">
+          <label className="block text-sm md:text-base text-muted-foreground font-medium mb-2">
+            {steps[activeStep].label}
+          </label>
         </div>
-        <button
-          onClick={handleManualSubmit}
-          className="italic text-[0.75rem] md:text-[0.88rem] text-muted-foreground hover:text-foreground transition-colors md:ml-auto"
-        >
-          Submit
-        </button>
+
+        {/* Input Field */}
+        <div className="mb-8 md:mb-10">
+          <div className="w-full bg-muted flex items-center px-5 md:px-7 py-5 md:py-6 rounded-lg">
+            <input
+              {...form.register(currentField)}
+              type={currentField === "email" ? "email" : "text"}
+              placeholder={steps[activeStep].placeholder}
+              className="flex-1 bg-transparent border-none outline-none text-lg md:text-xl font-body placeholder:text-muted-foreground focus:ring-0"
+              autoComplete="off"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  if (activeStep === steps.length - 1) {
+                    handleManualSubmit();
+                  } else {
+                    handleNext();
+                  }
+                }
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => activeStep === steps.length - 1 ? handleManualSubmit() : handleNext()}
+              className="text-muted-foreground text-2xl md:text-3xl hover:text-foreground transition-colors p-2 flex-shrink-0"
+              aria-label="Next step"
+            >
+              &#x21B5;
+            </button>
+          </div>
+        </div>
+
+        {/* Steps Indicator */}
+        <div className="mb-8 md:mb-10">
+          <div className="flex flex-wrap gap-2 md:gap-3">
+            {steps.map((step, index) => (
+              <button
+                key={step.id}
+                onClick={() => index < activeStep && setActiveStep(index)}
+                className={cn(
+                  "text-[0.8rem] md:text-[0.9rem] px-3 md:px-4 py-2 md:py-2.5 rounded-full transition-colors",
+                  index === activeStep
+                    ? "bg-primary/15 text-primary font-medium"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted",
+                  index > activeStep && "cursor-default opacity-50"
+                )}
+              >
+                {step.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Spacer to push button down */}
+        <div className="flex-1" />
+
+        {/* Submit Button */}
+        <div className="pt-8 md:pt-10 border-t border-border animate-fade-up [animation-delay:0.5s]">
+          <button
+            onClick={handleManualSubmit}
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-4 md:py-5 px-6 md:px-8 text-base md:text-lg font-medium rounded-lg transition-all duration-200 active:scale-95"
+          >
+            Submit Application
+          </button>
+        </div>
       </div>
     </div>
   );
