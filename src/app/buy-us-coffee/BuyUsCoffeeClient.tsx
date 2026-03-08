@@ -7,7 +7,7 @@ import { ArrowRight, Check } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useToast } from '@/hooks/use-toast';
 
-const amounts = [5, 10, 20, 50, 100, 250];
+const amounts = [50, 100, 250];
 
 export default function BuyUsCoffeeClient() {
   const { toast } = useToast();
@@ -30,8 +30,8 @@ export default function BuyUsCoffeeClient() {
   const handleProceed = () => {
     const finalAmount = selectedAmount ?? parseFloat(customAmount);
 
-    if (!finalAmount || finalAmount <= 0) {
-      toast({ title: "Invalid Amount", description: "Please select or enter a valid amount.", variant: "destructive" });
+    if (!finalAmount || finalAmount < 50) {
+      toast({ title: "Invalid Amount", description: "The minimum amount is $50.", variant: "destructive" });
       return;
     }
     if (!email || !/\S+@\S+\.\S+/.test(email)) {
@@ -73,7 +73,7 @@ export default function BuyUsCoffeeClient() {
             <div className="bg-[#eeede9] p-6 rounded-[2px]">
                 <div className="mb-6">
                     <h3 className="text-lg font-semibold mb-3">Select Amount (USD)</h3>
-                    <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
+                    <div className="grid grid-cols-3 gap-2">
                         {amounts.map(amt => (
                             <button key={amt} onClick={() => { setSelectedAmount(amt); setCustomAmount(''); }} className={`py-3 px-2 rounded-[2px] border-2 ${selectedAmount === amt ? 'bg-[#2255e0] text-white border-transparent' : 'bg-white border-white'}`}>
                                 ${amt}
@@ -85,7 +85,7 @@ export default function BuyUsCoffeeClient() {
                 <div className="mb-6">
                     <input
                         type="number"
-                        placeholder="Or enter a custom amount"
+                        placeholder="Or enter a custom amount ($50 min)"
                         value={customAmount}
                         onChange={(e) => { setCustomAmount(e.target.value); setSelectedAmount(null); }}
                         className="w-full bg-white border-none py-3 px-4 text-base rounded-[2px] outline-none"
