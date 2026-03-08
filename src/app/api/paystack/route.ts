@@ -20,11 +20,15 @@ export async function POST(request: Request) {
       currency: 'KES',
     };
 
-    // Determine payment method by presence of card or mpesa object and add to payload
+    // Determine payment method and construct payload
     if (card) {
       payload.card = card;
-    } else if (mpesa) {
-      payload.mpesa = mpesa;
+    } else if (mpesa && mpesa.phone) {
+      // Correctly structure the payload for M-Pesa
+      payload.mobile_money = {
+        phone: mpesa.phone,
+        provider: 'mpesa',
+      };
     } else {
       // If neither card nor mpesa object is present, it's a bad request.
       console.error('Validation Error: No card or mpesa object found in the request body.');

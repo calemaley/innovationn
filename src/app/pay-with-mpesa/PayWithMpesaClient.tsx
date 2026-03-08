@@ -55,9 +55,9 @@ export default function PayWithMpesaClient() {
 
             const result = await response.json();
 
-            if (response.ok) {
-                toast({ title: "Success", description: "STK push sent to your phone." });
-                router.push(`/thank-you?amount=${amount}&email=${email}`);
+            if (response.ok && result.reference) {
+                toast({ title: "STK Sent", description: result.display_text || "Check your phone to complete payment." });
+                router.push(`/payment-callback?reference=${result.reference}&amount=${amount}&email=${email}`);
             } else {
                 toast({ title: "Payment Failed", description: result.error || 'An error occurred.', variant: "destructive" });
             }

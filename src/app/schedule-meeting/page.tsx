@@ -54,14 +54,23 @@ export default function ScheduleMeetingPage() {
   }, []);
 
   const handleSchedule = () => {
+    const meetingDetails = {
+        month: selectedMonth,
+        day: selectedDay,
+        time: '16:00-17:00',
+        timezone: selectedTimezone,
+    };
+
+    // Encode the details for the URL
+    const queryParams = new URLSearchParams(meetingDetails).toString();
+
     toast({
-      title: 'Meeting Scheduled',
-      description: `Confirmed for ${selectedMonth} ${selectedDay} at 16:00-17:00. Timezone: ${selectedTimezone.replace(/_/g, ' ')}`,
+      title: 'Meeting Details Saved',
+      description: `Confirmed for ${selectedMonth} ${selectedDay} at 16:00-17:00. Please proceed to payment.`,
     });
-    // Redirect to buy us coffee page after a short delay
-    setTimeout(() => {
-      router.push('/buy-us-coffee');
-    }, 1500);
+
+    // Redirect to the donation page with meeting details in the query
+    router.push(`/buy-us-coffee?${queryParams}`);
   };
 
   return (

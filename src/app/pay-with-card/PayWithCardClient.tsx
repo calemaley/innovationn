@@ -82,10 +82,11 @@ export default function PayWithCardClient() {
 
             const result = await response.json();
 
-            if (response.ok) {
-                toast({ title: "Success", description: "Payment successful!" });
-                router.push(`/thank-you?amount=${amount}&email=${email}`);
+            if (response.ok && result.reference) {
+                // If the charge is successful and returns a reference, redirect to callback
+                router.push(`/payment-callback?reference=${result.reference}&amount=${amount}&email=${email}`);
             } else {
+                // Handle immediate failures or errors
                 toast({ title: "Payment Failed", description: result.error || 'An error occurred.', variant: "destructive" });
             }
         } catch (error) {
