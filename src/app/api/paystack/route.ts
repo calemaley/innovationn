@@ -8,7 +8,11 @@ export async function POST(request: Request) {
   console.log('PAYSTACK_SECRET_KEY loaded:', !!PAYSTACK_SECRET_KEY);
 
   try {
-    const { amount, email, card, mpesa } = await request.json();
+    const body = await request.json();
+    const { amount, email, card, mpesa } = body;
+
+    // Log the entire received body
+    console.log('Received request body:', body);
 
     let payload: any = {
       email,
@@ -16,11 +20,15 @@ export async function POST(request: Request) {
       currency: 'KES',
     };
 
-    // Determine payment method by presence of card or mpesa object
+    // Determine payment method by presence of card or mpesa object and add to payload
     if (card) {
       payload.card = card;
     } else if (mpesa) {
       payload.mpesa = mpesa;
+    } else {
+      // If neither card nor mpesa object is present, it's a bad request.
+      console.error('Validation Error: No card or mpesa object found in the request body.');
+      return new Response(JSON.stringify({ error: 'Payment details are required. Provide either a card or mpesa object.' }), { status: 400 });
     }
 
     // Log the payload we are sending to Paystack
@@ -50,6 +58,9 @@ export async function POST(request: Request) {
   } catch (error: any) {
     // Log any unexpected errors
     console.error('An unexpected error occurred:', error.message);
+    if (error instanceof SyntaxError) { // Catches JSON parsing errors
+        return new Response(JSON.stringify({ error: 'Invalid JSON in request body.' }), { status: 400 });
+    }
     return new Response(JSON.stringify({ error: 'An unexpected error occurred.' }), { status: 500 });
   }
 }
