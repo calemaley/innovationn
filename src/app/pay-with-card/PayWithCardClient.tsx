@@ -71,7 +71,6 @@ export default function PayWithCardClient() {
                 body: JSON.stringify({
                     amount: parseFloat(amount),
                     email,
-                    payment_method: 'card',
                     card: {
                         number: data.cardNumber.replace(/\s/g, ''),
                         cvv: data.cvv,

@@ -47,7 +47,6 @@ export default function PayWithMpesaClient() {
                 body: JSON.stringify({
                     amount: parseFloat(amount),
                     email,
-                    payment_method: 'mpesa',
                     mpesa: {
                         phone: data.phone,
                     },
