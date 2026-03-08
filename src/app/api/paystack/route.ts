@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   console.log('PAYSTACK_SECRET_KEY loaded:', !!PAYSTACK_SECRET_KEY);
 
   try {
-    const { amount, email, payment_method, card, mpesa } = await request.json();
+    const { amount, email, card, mpesa } = await request.json();
 
     let payload: any = {
       email,
@@ -16,9 +16,10 @@ export async function POST(request: Request) {
       currency: 'KES',
     };
 
-    if (payment_method === 'card') {
+    // Determine payment method by presence of card or mpesa object
+    if (card) {
       payload.card = card;
-    } else if (payment_method === 'mpesa') {
+    } else if (mpesa) {
       payload.mpesa = mpesa;
     }
 
