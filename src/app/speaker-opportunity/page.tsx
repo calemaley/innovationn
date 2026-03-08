@@ -1,22 +1,41 @@
-"use client"
+'use client'
 
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { db } from "@/lib/firebase";
+import { ref, set, push } from "firebase/database";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const steps = [
   { id: "name", label: "Name", placeholder: "Enter name" },
   { id: "industry", label: "Industry", placeholder: "Enter industry" },
   { id: "country", label: "Country", placeholder: "Enter country" },
-  { id: "organization", label: "Organization", placeholder: "Enter organization type" },
+  { id: "organization", label: "Organization", placeholder: "Select organization type" },
   { id: "orgName", label: "Organization's name", placeholder: "Enter organization's name" },
   { id: "email", label: "Email", placeholder: "Enter email" },
+];
+
+const organizationTypes = [
+    "Startup",
+    "Small and Medium-sized Enterprise (SME)",
+    "Large Corporation",
+    "Non-profit Organization (NGO)",
+    "Government Agency",
+    "Educational Institution",
+    "Research Institute",
+    "Venture Capital Firm",
+    "Accelerator/Incubator",
+    "Consulting Firm",
+    "Freelancer/Individual Consultant",
+    "Community Organization",
+    "Other"
 ];
 
 const formSchema = z.object({
@@ -59,12 +78,46 @@ export default function SpeakerOpportunity() {
     }
   };
 
-  const handleManualSubmit = () => {
+  const handleManualSubmit = async () => {
+    const isFormValid = await form.trigger();
+    if (!isFormValid) {
+        toast({
+            title: "Incomplete form",
+            description: "Please fill all the fields before submitting.",
+            variant: "destructive"
+        });
+        return;
+    }
+    const formData = form.getValues();
+
     toast({
       title: "Submitting...",
-      description: "Redirecting you to the schedule page.",
+      description: "Please wait while we save your information.",
     });
-    router.push("/schedule-meeting");
+
+    try {
+        const speakersRef = ref(db, 'speakers');
+        const newSpeakerRef = push(speakersRef);
+        await set(newSpeakerRef, formData);
+
+        if (newSpeakerRef.key) {
+            localStorage.setItem('speakerId', newSpeakerRef.key);
+        }
+
+        toast({
+            title: "Success!",
+            description: "Your information has been saved.",
+        });
+        router.push("/schedule-meeting");
+
+    } catch (error) {
+        console.error("Error saving to Firebase:", error);
+        toast({
+            title: "Error",
+            description: "There was an error saving your information. Please try again.",
+            variant: "destructive"
+        });
+    }
   };
 
   return (
@@ -99,23 +152,45 @@ export default function SpeakerOpportunity() {
         {/* Input Field */}
         <div className="mb-10 md:mb-12">
           <div className="w-full bg-muted flex items-center px-5 md:px-7 py-6 md:py-7 rounded-lg">
-            <input
-              {...form.register(currentField)}
-              type={currentField === "email" ? "email" : "text"}
-              placeholder={steps[activeStep].placeholder}
-              className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body placeholder:text-muted-foreground focus:ring-0"
-              autoComplete="off"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  if (activeStep === steps.length - 1) {
-                    handleManualSubmit();
-                  } else {
-                    handleNext();
-                  }
-                }
-              }}
-            />
+          {currentField === 'organization' ? (
+                 <Controller
+                    control={form.control}
+                    name="organization"
+                    render={({ field }) => (
+                        <Select onValueChange={(value) => {
+                            field.onChange(value);
+                            form.trigger("organization");
+                        }} defaultValue={field.value}>
+                            <SelectTrigger className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body placeholder:text-muted-foreground focus:ring-0 h-auto py-0">
+                                <SelectValue placeholder={steps[activeStep].placeholder} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {organizationTypes.map(org => (
+                                    <SelectItem key={org} value={org}>{org}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    )}
+                />
+            ) : (
+                <input
+                    {...form.register(currentField)}
+                    type={currentField === "email" ? "email" : "text"}
+                    placeholder={steps[activeStep].placeholder}
+                    className="flex-1 bg-transparent border-none outline-none text-xl md:text-2xl font-body placeholder:text-muted-foreground focus:ring-0"
+                    autoComplete="off"
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                        e.preventDefault();
+                        if (activeStep === steps.length - 1) {
+                            handleManualSubmit();
+                        } else {
+                            handleNext();
+                        }
+                        }
+                    }}
+                />
+            )}
             <button
               type="button"
               onClick={() => activeStep === steps.length - 1 ? handleManualSubmit() : handleNext()}
@@ -157,7 +232,7 @@ export default function SpeakerOpportunity() {
             onClick={handleManualSubmit}
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-5 md:py-6 px-6 md:px-8 text-lg md:text-xl font-medium rounded-lg transition-all duration-200 active:scale-95"
           >
-            Submit Application
+            Submit
           </button>
         </div>
       </div>

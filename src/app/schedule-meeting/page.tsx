@@ -1,28 +1,52 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { ChevronDown, ArrowRight } from "lucide-react";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { useToast } from "@/hooks/use-toast";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { ChevronDown, ArrowRight } from 'lucide-react';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useToast } from '@/hooks/use-toast';
 
 const months = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-const timezones = ["EAT", "UTC", "GMT", "EST", "PST", "CET"];
+const timezones = [
+  'Etc/GMT+12', 'Etc/GMT+11', 'Pacific/Midway', 'Pacific/Honolulu', 'America/Anchorage',
+  'America/Los_Angeles', 'America/Tijuana', 'America/Denver', 'America/Phoenix', 'America/Chihuahua',
+  'America/Mazatlan', 'America/Chicago', 'America/Regina', 'America/Mexico_City', 'America/Guatemala',
+  'America/New_York', 'America/Indiana/Indianapolis', 'America/Bogota', 'America/Lima', 'America/Caracas',
+  'America/Halifax', 'America/La_Paz', 'America/Santiago', 'America/St_Johns', 'America/Sao_Paulo',
+  'America/Argentina/Buenos_Aires', 'America/Godthab', 'Etc/GMT+2', 'Atlantic/Cape_Verde', 'Atlantic/Azores',
+  'Europe/London', 'Africa/Casablanca', 'Europe/Dublin', 'Europe/Lisbon', 'Europe/Amsterdam',
+  'Europe/Belgrade', 'Europe/Berlin', 'Europe/Bratislava', 'Europe/Brussels', 'Europe/Budapest',
+  'Europe/Copenhagen', 'Europe/Ljubljana', 'Europe/Madrid', 'Europe/Paris', 'Europe/Prague',
+  'Europe/Rome', 'Europe/Sarajevo', 'Europe/Skopje', 'Europe/Stockholm', 'Europe/Vienna',
+  'Europe/Warsaw', 'Europe/Zagreb', 'Africa/Algiers', 'Europe/Bucharest', 'Africa/Cairo',
+  'Europe/Helsinki', 'Europe/Istanbul', 'Europe/Athens', 'Asia/Jerusalem', 'Africa/Harare',
+  'Europe/Kiev', 'Europe/Minsk', 'Europe/Riga', 'Europe/Sofia', 'Europe/Tallinn',
+  'Europe/Vilnius', 'Asia/Baghdad', 'Asia/Kuwait', 'Africa/Nairobi', 'Asia/Riyadh',
+  'Europe/Moscow', 'Asia/Tehran', 'Asia/Baku', 'Asia/Dubai', 'Asia/Muscat',
+  'Asia/Tbilisi', 'Asia/Yerevan', 'Asia/Kabul', 'Asia/Karachi', 'Asia/Tashkent',
+  'Asia/Yekaterinburg', 'Asia/Kolkata', 'Asia/Colombo', 'Asia/Kathmandu', 'Asia/Almaty',
+  'Asia/Dhaka', 'Asia/Novosibirsk', 'Asia/Rangoon', 'Asia/Bangkok', 'Asia/Jakarta',
+  'Asia/Krasnoyarsk', 'Asia/Hong_Kong', 'Asia/Irkutsk', 'Asia/Kuala_Lumpur', 'Australia/Perth',
+  'Asia/Singapore', 'Asia/Taipei', 'Asia/Ulaanbaatar', 'Asia/Seoul', 'Asia/Tokyo',
+  'Australia/Adelaide', 'Australia/Darwin', 'Australia/Brisbane', 'Australia/Canberra', 'Australia/Melbourne',
+  'Australia/Sydney', 'Pacific/Guam', 'Pacific/Port_Moresby', 'Asia/Yakutsk', 'Australia/Hobart',
+  'Asia/Vladivostok', 'Pacific/Auckland', 'Pacific/Fiji', 'Etc/GMT-12', 'Pacific/Tongatapu'
+];
 
 export default function ScheduleMeetingPage() {
   const { toast } = useToast();
   const router = useRouter();
   const [days, setDays] = useState<number[]>([]);
-  const [selectedMonth, setSelectedMonth] = useState("March");
-  const [selectedDay, setSelectedDay] = useState("09");
-  const [selectedTimezone, setSelectedTimezone] = useState("EAT");
+  const [selectedMonth, setSelectedMonth] = useState('March');
+  const [selectedDay, setSelectedDay] = useState('09');
+  const [selectedTimezone, setSelectedTimezone] = useState(timezones[0]);
 
-  const meetingImage = PlaceHolderImages.find(img => img.id === "meeting-hero");
+  const meetingImage = PlaceHolderImages.find(img => img.id === 'meeting-hero');
 
   useEffect(() => {
     const daysArray = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -31,12 +55,12 @@ export default function ScheduleMeetingPage() {
 
   const handleSchedule = () => {
     toast({
-      title: "Meeting Scheduled",
-      description: `Confirmed for ${selectedMonth} ${selectedDay} at 16:00 ${selectedTimezone}.`,
+      title: 'Meeting Scheduled',
+      description: `Confirmed for ${selectedMonth} ${selectedDay} at 16:00-17:00. Timezone: ${selectedTimezone.replace(/_/g, ' ')}`,
     });
-    // Redirect to support page after a short delay
+    // Redirect to buy us coffee page after a short delay
     setTimeout(() => {
-      router.push("/buy-us-coffee");
+      router.push('/buy-us-coffee');
     }, 1500);
   };
 
@@ -46,7 +70,7 @@ export default function ScheduleMeetingPage() {
       <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden mb-3 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
         <div className="relative w-full aspect-[16/9] md:aspect-[5/3]">
           <Image
-            src={meetingImage?.imageUrl || "https://i.ibb.co/6cGDPDrR/mage-3.jpg"}
+            src={meetingImage?.imageUrl || 'https://i.ibb.co/6cGDPDrR/mage-3.jpg'}
             alt="Schedule Meeting"
             fill
             className="object-cover"
@@ -96,14 +120,14 @@ export default function ScheduleMeetingPage() {
               onChange={(e) => setSelectedTimezone(e.target.value)}
               className="w-full appearance-none bg-[#eeede9] border-none py-4 md:py-[18px] pl-6 pr-11 text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
             >
-              {timezones.map(t => <option key={t} value={t}>{t}</option>)}
+              {timezones.map(t => <option key={t} value={t}>{t.replace(/_/g, ' ')}</option>)}
             </select>
             <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
           </div>
 
           {/* Time Display */}
           <div className="flex-1 bg-[#eeede9] flex items-center justify-center md:justify-start px-4 md:px-6 py-4 md:py-[18px] text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px]">
-            <span>1600–1700 hrs</span>
+            <span>16:00–17:00 hrs</span>
           </div>
 
           {/* CTA Button - Desktop */}
