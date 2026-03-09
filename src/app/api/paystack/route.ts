@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
+const USD_TO_KES_EXCHANGE_RATE = 130;
 
 export async function POST(request: Request) {
   // Log to check if the environment variable is loaded.
@@ -14,9 +15,11 @@ export async function POST(request: Request) {
     // Log the entire received body
     console.log('Received request body:', body);
 
+    const amountInKES = amount * USD_TO_KES_EXCHANGE_RATE;
+
     let payload: any = {
       email,
-      amount: Math.round(amount * 100), // Amount in kobo
+      amount: Math.round(amountInKES * 100), // Amount in kobo
       currency: 'KES',
     };
 
