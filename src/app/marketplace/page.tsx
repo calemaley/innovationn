@@ -10,11 +10,6 @@ export default function MarketplacePage() {
       <p className="text-muted-foreground text-[0.9rem] md:text-base lg:text-lg max-w-xl leading-relaxed">
         The InnovationZ Marketplace is launching soon! A dedicated space for members to share, sell, and license their groundbreaking solutions, tools, and services.
       </p>
-      <div className="mt-6 md:mt-8">
-        <button className="border-2 border-primary text-primary px-6 md:px-8 py-2 md:py-2.5 text-[0.85rem] md:text-base rounded-md font-medium hover:bg-primary hover:text-white transition-all">
-          Get Notified on Launch
-        </button>
-      </div>
     </div>
   );
 }

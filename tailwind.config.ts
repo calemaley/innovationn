@@ -12,6 +12,8 @@ export default {
       fontFamily: {
         body: ['DM Sans', 'sans-serif'],
         headline: ['DM Serif Display', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -65,6 +67,12 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        black: '#000',
+        'gray-light': '#878787',
+        'blue-primary': '#0059FF',
+        'off-white': '#F5F4F0',
+        'gray-border': '#DADADA',
+        white: '#FFF',
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -61,7 +61,6 @@ export default function ScheduleMeetingPage() {
         timezone: selectedTimezone,
     };
 
-    // Encode the details for the URL
     const queryParams = new URLSearchParams(meetingDetails).toString();
 
     toast({
@@ -69,15 +68,20 @@ export default function ScheduleMeetingPage() {
       description: `Confirmed for ${selectedMonth} ${selectedDay} at 16:00-17:00. Please proceed to payment.`,
     });
 
-    // Redirect to the donation page with meeting details in the query
     router.push(`/buy-us-coffee?${queryParams}`);
   };
 
   return (
     <main className="flex-1 flex flex-col items-center px-6 md:px-12 pb-8 md:pb-16 pt-0 animate-fade-in">
+      
+      {/* Title for Small Screens */}
+      <h1 className="md:hidden text-black text-center font-['Inter'] text-2xl normal mb-4 w-full">
+        Schedule the meeting
+      </h1>
+
       {/* Image Container */}
-      <div className="w-full max-w-[920px] rounded-[4px] overflow-hidden mb-3 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
-        <div className="relative w-full aspect-[16/9] md:aspect-[5/3]">
+      <div className="w-full max-w-[1164px] rounded-[4px] overflow-hidden mb-3 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
+        <div className="relative w-[315px] h-[376px] md:w-full md:h-auto md:aspect-[194/109]">
           <Image
             src={meetingImage?.imageUrl || 'https://i.ibb.co/6cGDPDrR/mage-3.jpg'}
             alt="Schedule Meeting"
@@ -154,9 +158,9 @@ export default function ScheduleMeetingPage() {
         {/* CTA Button - Mobile */}
         <button
           onClick={handleSchedule}
-          className="md:hidden w-full bg-[#2255e0] hover:bg-[#1a44c8] text-white py-4 px-6 text-[0.95rem] font-medium flex items-center justify-center gap-2 rounded-[2px] transition-colors mt-4"
+          className="md:hidden w-full bg-[#2255e0] hover:bg-[#1a44c8] text-white py-4 px-6 text-[0.95rem] font-medium flex items-center justify-between rounded-[2px] transition-colors mt-4"
         >
-          Schedule meeting
+          <span>Schedule meeting</span>
           <span className="flex items-center justify-center w-[24px] h-[24px] rounded-full border-[1.5px] border-white/60 text-[0.75rem]">
             <ArrowRight className="w-3 h-3" />
           </span>
