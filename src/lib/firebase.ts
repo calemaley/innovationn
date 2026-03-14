@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics, isSupported } from "firebase/analytics";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,7 +18,9 @@ const firebaseConfig = {
   measurementId: "G-PP49KP5J5Q"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
-export const db = getDatabase(app);
+// Initialize Firebase to be SSR-friendly
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const db = getDatabase(app);
+const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
+
+export { db, app, analytics };

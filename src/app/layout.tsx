@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -22,7 +21,6 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Serif+Display&family=Inter:wght@400&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
-        <Navbar />
         <main className="flex-1 bg-white">
           {children}
         </main>
