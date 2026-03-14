@@ -46,7 +46,6 @@ export default function Home() {
         }
 
         html, body {
-          height: 100%;
           font-family: var(--sans);
           background: var(--white);
           color: var(--black);
@@ -58,6 +57,15 @@ export default function Home() {
         }
         @media (min-width: 901px) {
             .mobile-view { display: none; }
+            html, body {
+                height: 100%;
+                overflow: hidden;
+            }
+            .desktop-view {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
         }
 
         /* DESKTOP STYLES */
@@ -98,10 +106,17 @@ export default function Home() {
           background: var(--blue);
         }
         .desktop-hero {
-          padding: 100px 64px 80px;
-          max-width: 1280px;
-          margin: 0 auto;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 0 64px;
           width: 100%;
+        }
+        .hero-content-wrapper {
+            max-width: 1280px;
+            width: 100%;
         }
         .desktop-view .hero-heading {
           font-family: var(--serif);
@@ -109,16 +124,14 @@ export default function Home() {
           font-size: clamp(2rem, 4vw, 3rem);
           letter-spacing: -0.02em;
           line-height: 1.15;
-          margin-bottom: 64px;
+          margin-bottom: 40px;
           text-align: center;
-          animation: fadeUpDesktop 0.7s ease both;
         }
         .content-grid {
           display: grid;
           grid-template-columns: 1fr 380px;
           gap: 56px;
           align-items: start;
-          animation: fadeUpDesktop 0.7s 0.15s ease both;
         }
         .image-block {
           border-radius: 4px;
@@ -162,7 +175,6 @@ export default function Home() {
         .get-in-touch { display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--black); text-decoration: none; font-weight: 400; transition: gap 0.2s; }
         .get-in-touch:hover { gap: 12px; }
         .get-in-touch svg { width: 16px; height: 16px; }
-        @keyframes fadeUpDesktop { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* MOBILE STYLES */
         .mobile-view .shell { max-width: 420px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
@@ -171,25 +183,23 @@ export default function Home() {
         .mobile-view .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
         .mobile-view .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; }
         .mobile-view .content { flex: 1; padding: 28px 24px 32px; display: flex; flex-direction: column; }
-        .mobile-view h1 { font-family: var(--serif); font-weight: 400; font-size: 1.65rem; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 20px; animation: fadeUpMobile 0.5s ease both; }
-        .mobile-view .hero-image { width: 315px; height: 360px; border-radius: 6px; overflow: hidden; background: #c8cbd0; margin-bottom: 20px; align-self: center; animation: fadeUpMobile 0.5s 0.1s ease both; flex-shrink: 0; position: relative; }
+        .mobile-view h1 { font-family: var(--serif); font-weight: 400; font-size: 1.65rem; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 20px; }
+        .mobile-view .hero-image { width: 315px; height: 360px; border-radius: 6px; overflow: hidden; background: #c8cbd0; margin-bottom: 20px; align-self: center; flex-shrink: 0; position: relative; }
         .mobile-view .hero-image img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
-        .mobile-view .body-text-wrap { font-family: var(--serif); font-style: italic; font-size: 1rem; line-height: 1.65; color: var(--text-body); margin-bottom: 24px; animation: fadeUpMobile 0.5s 0.2s ease both; }
+        .mobile-view .body-text-wrap { font-family: var(--serif); font-style: italic; font-size: 1rem; line-height: 1.65; color: var(--text-body); margin-bottom: 24px; }
         .mobile-view .extra-text-block { display: none; }
-        .mobile-view .extra-text-block.visible { display: inline; animation: textReveal 0.35s ease both; }
+        .mobile-view .extra-text-block.visible { display: inline; }
         .mobile-view .ellipsis-btn { background: none; border: none; font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--blue); cursor: pointer; padding: 0; line-height: 1.65; transition: opacity 0.2s; }
         .mobile-view .ellipsis-btn:hover { opacity: 0.7; }
-        @keyframes textReveal { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-        .mobile-view .cta-btn { display: flex; align-items: center; justify-content: space-between; background: var(--blue); color: #fff; font-family: var(--sans); font-size: 1rem; font-weight: 500; padding: 20px 24px; border-radius: 8px; border: none; cursor: pointer; width: 100%; text-decoration: none; transition: background 0.2s, transform 0.15s; animation: fadeUpMobile 0.5s 0.3s ease both; margin-top: auto; }
+        .mobile-view .cta-btn { display: flex; align-items: center; justify-content: space-between; background: var(--blue); color: #fff; font-family: var(--sans); font-size: 1rem; font-weight: 500; padding: 20px 24px; border-radius: 8px; border: none; cursor: pointer; width: 100%; text-decoration: none; transition: background 0.2s, transform 0.15s; margin-top: auto; }
         .mobile-view .cta-btn:hover { background: var(--blue-hover); transform: translateY(-1px); }
         .mobile-view .cta-btn:active { transform: translateY(0); }
         .mobile-view .btn-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.45); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .mobile-view .btn-circle svg { width: 14px; height: 14px; fill: none; stroke: white; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-        @keyframes fadeUpMobile { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
 
       {/* DESKTOP VIEW */}
-      <div className="desktop-view" style={{height: '100%'}}>
+      <div className="desktop-view">
         <nav className="desktop-nav">
             <a href="#" className="desktop-logo">InnovationZ</a>
             <ul className="nav-links">
@@ -200,29 +210,31 @@ export default function Home() {
                 <li><a href="#">Our Marketplace</a></li>
             </ul>
         </nav>
-        <main className="desktop-hero" style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
-            <h1 className="hero-heading">From insightful webinars to nationwide case studies</h1>
-            <div className="content-grid">
-                <div className="image-block">
-                    <Image
-                        src={heroImage?.imageUrl || "https://i.ibb.co/jPYVg55M/mage-1.jpg"}
-                        alt={heroImage?.description || "Person watching a virtual meeting on a large monitor"}
-                        layout="fill"
-                        objectFit="cover"
-                        priority
-                    />
-                </div>
-                <div className="side-copy">
-                    <p>Globally, innovators struggle with challenges that domain knowledge can alleviate. We want to help innovators build with confidence once again starting with Kenya.</p>
-                    <p>Become a part of our global community of domain experts now and share your industry insights to our community of innovators and help them bring more resilient products to the market.</p>
-                    <Link href="/speaker-opportunity" className="desktop-cta-btn">
-                        Click to get started
-                        <span className="cta-arrow"><ArrowIcon /></span>
-                    </Link>
-                    <Link href="mailto:hello@innovationz.com" className="get-in-touch">
-                        Get in touch
-                        <SendIcon />
-                    </Link>
+        <main className="desktop-hero">
+            <div className="hero-content-wrapper">
+                <h1 className="hero-heading">From insightful webinars to nationwide case studies</h1>
+                <div className="content-grid">
+                    <div className="image-block">
+                        <Image
+                            src={heroImage?.imageUrl || "https://i.ibb.co/jPYVg55M/mage-1.jpg"}
+                            alt={heroImage?.description || "Person watching a virtual meeting on a large monitor"}
+                            layout="fill"
+                            objectFit="cover"
+                            priority
+                        />
+                    </div>
+                    <div className="side-copy">
+                        <p>Globally, innovators struggle with challenges that domain knowledge can alleviate. We want to help innovators build with confidence once again starting with Kenya.</p>
+                        <p>Become a part of our global community of domain experts now and share your industry insights to our community of innovators and help them bring more resilient products to the market.</p>
+                        <Link href="/speaker-opportunity" className="desktop-cta-btn">
+                            Click to get started
+                            <span className="cta-arrow"><ArrowIcon /></span>
+                        </Link>
+                        <Link href="mailto:hello@innovationz.com" className="get-in-touch">
+                            Get in touch
+                            <SendIcon />
+                        </Link>
+                    </div>
                 </div>
             </div>
         </main>
@@ -249,7 +261,7 @@ export default function Home() {
                     />
                 </div>
                 <div className="body-text-wrap">
-                    <span>Become a part of our global community of domain experts now and share your industry insights to our community of innovators and help them bring more resilient products to the market</span>
+                    <span>Become a part of our global community of domain experts now and share your industry insights to our community of innovators and and help them bring more resilient products to the market</span>
                     <span id="extraText" className={`extra-text-block ${isExpanded ? 'visible' : ''}`}>. Globally, innovators struggle with challenges that domain knowledge can alleviate. We want to help innovators build with confidence once again starting with Kenya.</span>
                     <button className="ellipsis-btn" id="toggleBtn" onClick={toggleText} aria-expanded={isExpanded}>
                         {isExpanded ? ' — show less' : '...'}
