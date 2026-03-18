@@ -2,170 +2,453 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, ArrowRight } from 'lucide-react';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useToast } from '@/hooks/use-toast';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
-
-const timezones = [
-  'Etc/GMT+12', 'Etc/GMT+11', 'Pacific/Midway', 'Pacific/Honolulu', 'America/Anchorage',
-  'America/Los_Angeles', 'America/Tijuana', 'America/Denver', 'America/Phoenix', 'America/Chihuahua',
-  'America/Mazatlan', 'America/Chicago', 'America/Regina', 'America/Mexico_City', 'America/Guatemala',
-  'America/New_York', 'America/Indiana/Indianapolis', 'America/Bogota', 'America/Lima', 'America/Caracas',
-  'America/Halifax', 'America/La_Paz', 'America/Santiago', 'America/St_Johns', 'America/Sao_Paulo',
-  'America/Argentina/Buenos_Aires', 'America/Godthab', 'Etc/GMT+2', 'Atlantic/Cape_Verde', 'Atlantic/Azores',
-  'Europe/London', 'Africa/Casablanca', 'Europe/Dublin', 'Europe/Lisbon', 'Europe/Amsterdam',
-  'Europe/Belgrade', 'Europe/Berlin', 'Europe/Bratislava', 'Europe/Brussels', 'Europe/Budapest',
-  'Europe/Copenhagen', 'Europe/Ljubljana', 'Europe/Madrid', 'Europe/Paris', 'Europe/Prague',
-  'Europe/Rome', 'Europe/Sarajevo', 'Europe/Skopje', 'Europe/Stockholm', 'Europe/Vienna',
-  'Europe/Warsaw', 'Europe/Zagreb', 'Africa/Algiers', 'Europe/Bucharest', 'Africa/Cairo',
-  'Europe/Helsinki', 'Europe/Istanbul', 'Europe/Athens', 'Asia/Jerusalem', 'Africa/Harare',
-  'Europe/Kiev', 'Europe/Minsk', 'Europe/Riga', 'Europe/Sofia', 'Europe/Tallinn',
-  'Europe/Vilnius', 'Asia/Baghdad', 'Asia/Kuwait', 'Africa/Nairobi', 'Asia/Riyadh',
-  'Europe/Moscow', 'Asia/Tehran', 'Asia/Baku', 'Asia/Dubai', 'Asia/Muscat',
-  'Asia/Tbilisi', 'Asia/Yerevan', 'Asia/Kabul', 'Asia/Karachi', 'Asia/Tashkent',
-  'Asia/Yekaterinburg', 'Asia/Kolkata', 'Asia/Colombo', 'Asia/Kathmandu', 'Asia/Almaty',
-  'Asia/Dhaka', 'Asia/Novosibirsk', 'Asia/Rangoon', 'Asia/Bangkok', 'Asia/Jakarta',
-  'Asia/Krasnoyarsk', 'Asia/Hong_Kong', 'Asia/Irkutsk', 'Asia/Kuala_Lumpur', 'Australia/Perth',
-  'Asia/Singapore', 'Asia/Taipei', 'Asia/Ulaanbaatar', 'Asia/Seoul', 'Asia/Tokyo',
-  'Australia/Adelaide', 'Australia/Darwin', 'Australia/Brisbane', 'Australia/Canberra', 'Australia/Melbourne',
-  'Australia/Sydney', 'Pacific/Guam', 'Pacific/Port_Moresby', 'Asia/Yakutsk', 'Australia/Hobart',
-  'Asia/Vladivostok', 'Pacific/Auckland', 'Pacific/Fiji', 'Etc/GMT-12', 'Pacific/Tongatapu'
-];
+const timezones = ['EAT', 'UTC', 'GMT', 'EST', 'PST', 'CET', 'IST'];
+const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 export default function ScheduleMeetingPage() {
   const { toast } = useToast();
   const router = useRouter();
-  const [days, setDays] = useState<number[]>([]);
+  const isMobile = useIsMobile();
+
   const [selectedMonth, setSelectedMonth] = useState('March');
   const [selectedDay, setSelectedDay] = useState('09');
-  const [selectedTimezone, setSelectedTimezone] = useState(timezones[0]);
+  const [selectedTimezone, setSelectedTimezone] = useState('EAT');
+  const [days, setDays] = useState<number[]>([]);
 
   const meetingImage = PlaceHolderImages.find(img => img.id === 'meeting-hero');
 
   useEffect(() => {
-    const daysArray = Array.from({ length: 31 }, (_, i) => i + 1);
-    setDays(daysArray);
-  }, []);
+    const monthIndex = months.indexOf(selectedMonth);
+    const numDays = daysInMonth[monthIndex];
+    const newDays = Array.from({ length: numDays }, (_, i) => i + 1);
+    setDays(newDays);
+
+    if (parseInt(selectedDay, 10) > numDays) {
+      setSelectedDay(String(numDays).padStart(2, '0'));
+    }
+  }, [selectedMonth, selectedDay]);
 
   const handleSchedule = () => {
-    const meetingDetails = {
-        month: selectedMonth,
-        day: selectedDay,
-        time: '16:00-17:00',
-        timezone: selectedTimezone,
-    };
-
-    const queryParams = new URLSearchParams(meetingDetails).toString();
-
     toast({
       title: 'Meeting Details Saved',
-      description: `Confirmed for ${selectedMonth} ${selectedDay} at 16:00-17:00. Please proceed to payment.`,
+      description: `Confirmed for ${selectedMonth} ${selectedDay} at 2000-2100 hrs ${selectedTimezone}. Please proceed to payment.`,
     });
 
+    const queryParams = new URLSearchParams({
+      month: selectedMonth,
+      day: selectedDay,
+      time: '2000-2100',
+      timezone: selectedTimezone,
+    }).toString();
     router.push(`/buy-us-coffee?${queryParams}`);
   };
+  
+  if (isMobile === undefined) {
+    return null; 
+  }
+
+  if (isMobile) {
+      return (
+          <>
+            <style jsx global>{`
+              @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+              body {
+                background: #e8e8e8 !important;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+              }
+
+              .phone-wrap {
+                width: 390px;
+                background: #ffffff;
+                border-radius: 48px;
+                box-shadow: 0 30px 80px rgba(0,0,0,0.22);
+                overflow: hidden;
+                padding-bottom: 40px;
+              }
+
+              .top-pad { height: 50px; }
+
+              .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 24px 0 24px;
+                height: 44px;
+              }
+
+              .brand {
+                font-size: 16px;
+                font-weight: 400;
+                color: #111;
+                letter-spacing: -0.2px;
+              }
+
+              .menu-icon {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 14px;
+                width: 22px;
+                cursor: pointer;
+              }
+              .menu-icon span {
+                display: block;
+                height: 1.5px;
+                background: #111;
+                border-radius: 2px;
+              }
+              .menu-icon span:nth-child(2) { width: 75%; }
+
+              .heading {
+                padding: 22px 24px 18px;
+                font-size: 22px;
+                font-weight: 400;
+                color: #111;
+                letter-spacing: -0.4px;
+                text-align: center;
+              }
+
+              .hero {
+                margin: 0 20px;
+                border-radius: 10px;
+                overflow: hidden;
+                height: 270px;
+              }
+              .hero img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center 20%;
+                display: block;
+              }
+
+              .form {
+                padding: 20px 20px 0;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+              }
+
+              .input-field {
+                border: 1px solid #d8d8d8;
+                border-radius: 8px;
+                padding: 15px 16px;
+                font-size: 15px;
+                font-family: inherit;
+                color: #aaa;
+                font-weight: 400;
+                background: #fff;
+                width: 100%;
+                outline: none;
+                appearance: none;
+              }
+
+              .time-row {
+                border: 1px solid #d8d8d8;
+                border-radius: 8px;
+                padding: 15px 16px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+              .time-row span {
+                font-size: 15px;
+                color: #aaa;
+                font-weight: 400;
+              }
+
+              .btn-schedule {
+                background: #1a6fe8;
+                color: #fff;
+                border: none;
+                border-radius: 10px;
+                padding: 17px 20px;
+                font-size: 17px;
+                font-family: inherit;
+                font-weight: 500;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                letter-spacing: -0.2px;
+                margin-top: 4px;
+              }
+
+              .btn-schedule:active { opacity: 0.9; }
+
+              .arrow-btn {
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                border: 2px solid rgba(255,255,255,0.55);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+              }
+
+              .arrow-btn svg {
+                width: 15px;
+                height: 15px;
+              }
+            `}</style>
+            <div className="phone-wrap">
+                <div className="top-pad"></div>
+
+                <nav className="navbar">
+                    <span className="brand">InnovationZ</span>
+                    <div className="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    </div>
+                </nav>
+
+                <div className="heading">Schedule the meeting</div>
+
+                <div className="hero">
+                    <Image
+                        src={meetingImage?.imageUrl || 'https://i.ibb.co/6cGDPDrR/mage-3.jpg'}
+                        alt="Schedule a meeting with InnovationZ"
+                        width={350}
+                        height={270}
+                        priority
+                    />
+                </div>
+
+                <div className="form">
+                    <input className="input-field" type="text" placeholder="March" readOnly value={selectedMonth} />
+                    <input className="input-field" type="text" placeholder="09" readOnly value={selectedDay} />
+                    <div className="time-row">
+                        <span>20:00 -21:00</span>
+                        <span>{selectedTimezone}</span>
+                    </div>
+                    <button className="btn-schedule" onClick={handleSchedule}>
+                    Schedule
+                    <div className="arrow-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M5 12h14"/>
+                        <path d="M13 6l6 6-6 6"/>
+                        </svg>
+                    </div>
+                    </button>
+                </div>
+            </div>
+          </>
+      )
+  }
 
   return (
-    <main className="flex-1 flex flex-col items-center px-6 md:px-12 pb-8 md:pb-16 pt-0 animate-fade-in">
-      
-      {/* Title for Small Screens */}
-      <h1 className="md:hidden text-black text-center font-['Inter'] text-2xl normal mb-4 w-full">
-        Schedule the meeting
-      </h1>
+    <>
+      <style jsx global>{`
+        body {
+          font-family: 'DM Sans', sans-serif !important;
+          background: #ffffff !important;
+          color: #111110 !important;
+          -webkit-font-smoothing: antialiased;
+        }
+        .schedule-page-container nav {
+          padding: 24px 48px;
+        }
+        .schedule-page-container .logo {
+          font-size: 1rem;
+          font-weight: 500;
+          color: #111110;
+          text-decoration: none;
+        }
+        .schedule-page-container .page {
+          max-width: 940px;
+          margin: 0 auto;
+          padding: 0 48px 32px;
+        }
+        .schedule-page-container .hero-image {
+          width: 100%;
+          max-height: 520px;
+          border-radius: 8px;
+          overflow: hidden;
+          background: #2d5f79;
+          margin-bottom: 16px;
+          animation: fadeUp 0.6s ease both;
+        }
+        .schedule-page-container .hero-image img {
+          width: 100%;
+          height: 100%;
+          max-height: 520px;
+          object-fit: cover;
+          object-position: center 20%;
+          display: block;
+        }
+        .schedule-page-container .controls {
+          display: flex;
+          align-items: stretch;
+          gap: 12px;
+          animation: fadeUp 0.6s 0.15s ease both;
+        }
+        .schedule-page-container .pill {
+          background: #efefed;
+          border-radius: 6px;
+          border: none;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 0 20px;
+          height: 60px;
+          cursor: pointer;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 1rem;
+          color: #111110;
+          white-space: nowrap;
+          transition: background 0.2s;
+          position: relative;
+        }
+        .schedule-page-container .pill:hover { background: #e4e2df; }
+        .schedule-page-container .pill select {
+          background: transparent;
+          border: none;
+          outline: none;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 1rem;
+          color: #111110;
+          appearance: none;
+          -webkit-appearance: none;
+          cursor: pointer;
+          width: 100%;
+          height: 100%;
+          padding-right: 18px; /* Space for chevron */
+        }
+        .schedule-page-container .chevron {
+          width: 16px;
+          height: 16px;
+          flex-shrink: 0;
+          pointer-events: none;
+        }
+        .schedule-page-container .chevron path {
+          fill: none;
+          stroke: #111110;
+          stroke-width: 2;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+        .schedule-page-container .pill-time {
+          flex: 1;
+          justify-content: center;
+        }
+        .schedule-page-container .pill-time:hover { background: #efefed; cursor: default; }
+        .schedule-page-container .cta-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 18px;
+          background: #1a4fff;
+          color: #fff;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 1rem;
+          font-weight: 500;
+          padding: 0 28px;
+          height: 60px;
+          border-radius: 6px;
+          border: none;
+          cursor: pointer;
+          flex-shrink: 0;
+          transition: background 0.2s, transform 0.15s;
+          white-space: nowrap;
+        }
+        .schedule-page-container .cta-btn:hover { background: #1040e8; transform: translateY(-1px); }
+        .schedule-page-container .cta-btn:active { transform: translateY(0); }
+        .schedule-page-container .cta-circle {
+          width: 30px; height: 30px;
+          border-radius: 50%;
+          border: 2px solid rgba(255,255,255,0.45);
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+        .schedule-page-container .cta-circle svg {
+          width: 13px; height: 13px;
+          fill: none; stroke: white;
+          stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+        }
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(16px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 700px) {
+          .schedule-page-container nav { padding: 20px 24px; }
+          .schedule-page-container .page { padding: 0 24px 24px; }
+          .schedule-page-container .controls { flex-wrap: wrap; }
+          .schedule-page-container .pill { flex-grow: 1; }
+          .schedule-page-container .pill-time { flex-basis: 100%; justify-content: center; }
+          .schedule-page-container .cta-btn { width: 100%; justify-content: center; }
+        }
+      `}</style>
+      <div className="schedule-page-container">
+        <nav>
+          <Link href="/" className="logo">InnovationZ</Link>
+        </nav>
 
-      {/* Image Container */}
-      <div className="w-full max-w-[1164px] rounded-[4px] overflow-hidden mb-3 opacity-0 animate-fade-in [animation-delay:0.1s] [animation-fill-mode:forwards]">
-        <div className="relative w-[315px] h-[376px] md:w-full md:h-auto md:aspect-[194/109]">
-          <Image
-            src={meetingImage?.imageUrl || 'https://i.ibb.co/6cGDPDrR/mage-3.jpg'}
-            alt="Schedule Meeting"
-            fill
-            className="object-cover"
-            priority
-            data-ai-hint="meeting schedule"
-          />
-        </div>
+        <main className="page">
+          <div className="hero-image">
+            <Image
+              src={meetingImage?.imageUrl || 'https://i.ibb.co/6cGDPDrR/mage-3.jpg'}
+              alt="Schedule a meeting with InnovationZ"
+              width={940}
+              height={520}
+              priority
+            />
+          </div>
+
+          <div className="controls">
+            <label className="pill">
+              <select id="monthSelect" aria-label="Month" value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
+                {months.map(m => <option key={m} value={m}>{m}</option>)}
+              </select>
+              <svg className="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </label>
+
+            <label className="pill">
+              <select id="daySelect" aria-label="Day" value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
+                {days.map(d => (
+                  <option key={d} value={String(d).padStart(2, '0')}>
+                    {String(d).padStart(2, '0')}
+                  </option>
+                ))}
+              </select>
+              <svg className="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </label>
+
+            <label className="pill">
+              <select id="tzSelect" aria-label="Timezone" value={selectedTimezone} onChange={(e) => setSelectedTimezone(e.target.value)}>
+                {timezones.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
+              <svg className="chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+            </label>
+
+            <div className="pill pill-time">2000 hrs – 2100 hrs</div>
+
+            <button className="cta-btn" onClick={handleSchedule}>
+              Schedule the meeting
+              <span className="cta-circle">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </button>
+          </div>
+        </main>
       </div>
-
-      {/* Controls Container */}
-      <div className="w-full max-w-[920px] opacity-0 animate-fade-up [animation-delay:0.35s] [animation-fill-mode:forwards]">
-        {/* Controls Row */}
-        <div className="w-full flex flex-col md:flex-row items-stretch gap-4 md:gap-3 mb-4 md:mb-0">
-
-          {/* Month Select */}
-          <div className="relative flex-1">
-            <select
-              value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
-              className="w-full appearance-none bg-[#eeede9] border-none py-4 md:py-[18px] pl-6 pr-11 text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
-            >
-              {months.map(m => <option key={m} value={m}>{m}</option>)}
-            </select>
-            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
-          </div>
-
-          {/* Day Select */}
-          <div className="relative flex-1">
-            <select
-              value={selectedDay}
-              onChange={(e) => setSelectedDay(e.target.value)}
-              className="w-full appearance-none bg-[#eeede9] border-none py-4 md:py-[18px] pl-6 pr-11 text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
-            >
-              {days.map(d => (
-                <option key={d} value={String(d).padStart(2, '0')}>
-                  {String(d).padStart(2, '0')}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
-          </div>
-
-          {/* Timezone Select */}
-          <div className="relative flex-1">
-            <select
-              value={selectedTimezone}
-              onChange={(e) => setSelectedTimezone(e.target.value)}
-              className="w-full appearance-none bg-[#eeede9] border-none py-4 md:py-[18px] pl-6 pr-11 text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px] outline-none cursor-pointer font-body transition-colors focus:ring-2 focus:ring-primary/20"
-            >
-              {timezones.map(t => <option key={t} value={t}>{t.replace(/_/g, ' ')}</option>)}
-            </select>
-            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[#111110]" />
-          </div>
-
-          {/* Time Display */}
-          <div className="flex-1 bg-[#eeede9] flex items-center justify-center md:justify-start px-4 md:px-6 py-4 md:py-[18px] text-[0.95rem] md:text-[1.05rem] text-[#111110] rounded-[2px]">
-            <span>16:00–17:00 hrs</span>
-          </div>
-
-          {/* CTA Button - Desktop */}
-          <button
-            onClick={handleSchedule}
-            className="hidden md:flex bg-[#2255e0] hover:bg-[#1a44c8] text-white py-4 md:py-[18px] px-6 md:px-8 text-[0.95rem] md:text-[1.05rem] font-medium items-center justify-center gap-2 md:gap-3 rounded-[2px] transition-colors"
-          >
-            Schedule meeting
-            <span className="flex items-center justify-center w-[24px] md:w-[26px] h-[24px] md:h-[26px] rounded-full border-[1.5px] border-white/60 text-[0.75rem] md:text-[0.85rem]">
-              <ArrowRight className="w-3 h-3" />
-            </span>
-          </button>
-        </div>
-
-        {/* CTA Button - Mobile */}
-        <button
-          onClick={handleSchedule}
-          className="md:hidden w-full bg-[#2255e0] hover:bg-[#1a44c8] text-white py-4 px-6 text-[0.95rem] font-medium flex items-center justify-between rounded-[2px] transition-colors mt-4"
-        >
-          <span>Schedule meeting</span>
-          <span className="flex items-center justify-center w-[24px] h-[24px] rounded-full border-[1.5px] border-white/60 text-[0.75rem]">
-            <ArrowRight className="w-3 h-3" />
-          </span>
-        </button>
-      </div>
-    </main>
+    </>
   );
 }

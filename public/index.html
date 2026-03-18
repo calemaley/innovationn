@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --accent: #e8ff47;
+      --accent2: #ff4778;
+      --text: #f0f0f0;
+      --muted: #555566;
+      --card-border: rgba(232,255,71,0.15);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(232,255,71,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232,255,71,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridDrift 20s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes gridDrift {
+      from { background-position: 0 0; }
+      to   { background-position: 60px 60px; }
+    }
+
+    /* Glowing orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.18;
+      z-index: 0;
+      animation: pulse 8s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--accent); top: -150px; left: -150px; }
+    .orb-2 { width: 400px; height: 400px; background: var(--accent2); bottom: -120px; right: -100px; animation-delay: -4s; }
+
+    @keyframes pulse {
+      from { transform: scale(1); opacity: 0.15; }
+      to   { transform: scale(1.2); opacity: 0.22; }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 18vw, 11rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .sub {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      margin-bottom: 4rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    /* Countdown */
+    .countdown {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .unit {
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.8rem 2rem;
+      min-width: 120px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .unit::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.6;
+    }
+
+    .unit:hover {
+      transform: translateY(-4px);
+      border-color: rgba(232,255,71,0.35);
+    }
+
+    .digit {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.8rem;
+      line-height: 1;
+      color: var(--accent);
+      display: block;
+      transition: transform 0.15s cubic-bezier(.17,.67,.83,.67);
+    }
+
+    .digit.flip {
+      transform: scale(1.15);
+    }
+
+    .label {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* Separator dots */
+    .sep {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--muted);
+      align-self: center;
+      margin-bottom: 1.6rem;
+      animation: blink 1s step-start infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* Monday badge */
+    .monday-tag {
+      display: inline-block;
+      margin-top: 3rem;
+      padding: 0.5rem 1.4rem;
+      border-radius: 100px;
+      border: 1px solid var(--card-border);
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 0.8s 1.1s forwards;
+    }
+
+    .monday-tag span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Done state */
+    .done-msg {
+      display: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 10vw, 6rem);
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      animation: fadeUp 0.6s forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="wrapper">
+    <p class="eyebrow">InnovationZ</p>
+    <h1>Coming<br>Soon</h1>
+    <p class="sub">We're putting the finishing touches on something great.</p>
+
+    <div class="countdown" id="countdown">
+      <div class="unit">
+        <span class="digit" id="days">00</span>
+        <span class="label">Days</span>
+      </div>
+      <div class="sep">:</div>
+      <div class="unit">
+        <span class="digit" id="hours">00</span>
+        <span class="label">Hours</span>
+      </div>
+      <div class="sep">:</div>
+      <div class="unit">
+        <span class="digit" id="minutes">00</span>
+        <span class="label">Minutes</span>
+      </div>
+      <div class="sep">:</div>
+      <div class="unit">
+        <span class="digit" id="seconds">00</span>
+        <span class="label">Seconds</span>
+      </div>
+    </div>
+
+    <p class="done-msg" id="doneMsg">🎉 We're Live!</p>
+
+    <div class="monday-tag">Launching <span>Monday</span></div>
+  </div>
+
+  <script>
+    function getNextMonday() {
+      const now = new Date();
+      const day = now.getDay(); // 0=Sun, 1=Mon...
+      const daysUntilMonday = day === 1 ? 7 : (8 - day) % 7 || 7;
+      const monday = new Date(now);
+      monday.setDate(now.getDate() + daysUntilMonday);
+      monday.setHours(11, 0, 0, 0); // 11 AM Nairobi Time
+      return monday;
+    }
+
+    const target = getNextMonday();
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function animateFlip(el) {
+      el.classList.add('flip');
+      setTimeout(() => el.classList.remove('flip'), 150);
+    }
+
+    const daysEl    = document.getElementById('days');
+    const hoursEl   = document.getElementById('hours');
+    const minsEl    = document.getElementById('minutes');
+    const secsEl    = document.getElementById('seconds');
+    const countdown = document.getElementById('countdown');
+    const doneMsg   = document.getElementById('doneMsg');
+
+    let prev = {};
+
+    function update() {
+      const now  = new Date();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        countdown.style.display = 'none';
+        doneMsg.style.display   = 'block';
+        return;
+      }
+
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000)  / 60000);
+      const s = Math.floor((diff % 60000)    / 1000);
+
+      if (prev.d !== d) { daysEl.textContent  = pad(d); animateFlip(daysEl);  }
+      if (prev.h !== h) { hoursEl.textContent = pad(h); animateFlip(hoursEl); }
+      if (prev.m !== m) { minsEl.textContent  = pad(m); animateFlip(minsEl);  }
+      if (prev.s !== s) { secsEl.textContent  = pad(s); animateFlip(secsEl);  }
+
+      prev = { d, h, m, s };
+    }
+
+    update();
+    setInterval(update, 1000);
+  </script>
+</body>
+</html>
